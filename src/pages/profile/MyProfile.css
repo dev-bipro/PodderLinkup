@@ -1,0 +1,58 @@
+.coverPicDiv{
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+}
+.coverPic{
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0 0;
+    object-fit: cover;
+}
+.editCoverImage{
+    position: absolute;
+    top: 20px;
+    right: 50px;
+    /* width: 100%; */
+}
+.editCoverImage{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 13px 18px;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+}
+.profiledittalsFlex{
+    padding: 25px 25px 35px 0;
+    display: flex;
+    justify-content: end;
+    position: relative;
+}
+.profilePhotoDiv{
+    width: 200px;
+    height: 200px;
+    border: 10px solid #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 25px;
+    transform: translateY(-35px);
+}
+.profilePhoto{
+    width: 100%;
+}
+.nameAndBio{
+    width: 80%;
+}
+.profileNameFlex{
+    display: flex;
+    justify-content: space-between;
+}
+.profileLocationFlex{
+    display: flex;
+    gap: 10px;
+}

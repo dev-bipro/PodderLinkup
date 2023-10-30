@@ -1,0 +1,89 @@
+.navContent{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navLogoDiv{
+    width: 60px;
+    height: 60px;
+}
+.navLogo{
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: cover;
+    object-fit: cover;
+}
+.navItems{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.navItem a{
+    text-transform: capitalize;
+    font-family: var(--nunito);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--main-text-color);
+    position: relative;
+}
+
+.navItem a::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    height: 2px;
+    color: var(--main-text-color);
+    transition: all linear .3s ;
+}
+.navItem a:hover::after{
+    width: 100%;
+    background-color: var(--main-color);
+}
+.active a{
+    text-transform: capitalize;
+    font-family: var(--nunito);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--main-color);
+    position: relative;
+}
+.active a::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--main-text-color);
+}
+.navProfile{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.navProfileImageDiv{
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #000;
+}
+.navProfileImage{
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: cover;
+    object-fit: cover;
+}
+.navProfile a{
+    text-transform: capitalize;
+    font-family: var(--nunito);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--main-text-color);
+    position: relative;
+}

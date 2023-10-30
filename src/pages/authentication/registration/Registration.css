@@ -1,0 +1,99 @@
+.registrationContent{
+    width: 518px;
+    padding-top: 140px;
+    margin: 0 auto;
+    text-align: center;
+}
+.regLogoDiv{
+    margin: 0 auto;
+    width: 120px;
+    margin-bottom: 42px;
+    /* text-align: center; */
+}
+.regLogo{
+    width: 100%;
+}
+.regHeading{
+    text-transform: capitalize;
+    font-family: var(--nunito);
+    font-weight: 700;
+    font-size: 32px;
+    color: var(--secondery-text-color);
+    margin-bottom: 15px;
+}
+.regSubHeading{
+    text-transform: capitalize;
+    font-family: var(--nunito);
+    font-weight: 400;
+    font-size: 20px;
+    color: var(--secondery-text-color);
+    margin-bottom: 72px;
+    opacity: .5;
+}
+.regInput{
+    width: 100%;
+    font-family: var(--nunito);
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--secondery-text-color);
+    opacity: .5;
+    margin-bottom: 42px !important;
+}
+.regInput:last-child{
+    margin-bottom: 0 !important;
+}
+.regInput label {
+    color: var(--secondery-text-color);
+}
+.regInput div fieldset {
+    border-color: var(--secondery-text-color) !important;
+}
+.regInput:focus-within label {
+    color: var(--main-color) !important;
+}
+.regInput:focus-within div fieldset {
+    border-color: var(--main-color) !important;
+}
+.passwordInput{
+  position: relative;
+}
+.passwordEyes{
+    position: absolute;
+    top: 30% ;
+    right: 20px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.passwordEyes svg{
+    color: var(--secondery-text-color);
+}
+.regBtn{
+    width: 100%;
+    text-transform: capitalize !important;
+    font-family: var(--nunito) !important;
+    font-weight: 600 !important;
+    font-size: 20px !important;
+    color: #fff !important;
+    padding: 15px 0 !important;
+    border-radius: 85px !important;
+    background: var(--main-gradiant-color);
+    transition: .3s !important;
+    margin-bottom: 20px ;
+}
+.regBtn:hover{
+    background: var(--main-hover-gradiant-color);
+}
+
+.navigatePage{
+    margin-top: 35px;
+    text-transform: capitalize;
+    color: var(--secondery-text-color);
+    font-family: var(--nunito);
+    font-size: 14px;
+    font-weight: 400;
+}
+.navigatePage a{
+    color: var(--main-color);
+    margin-left: 5px;
+}
+  
