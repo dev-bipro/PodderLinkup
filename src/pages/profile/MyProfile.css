@@ -37,6 +37,7 @@
     height: 200px;
     border: 10px solid #fff;
     border-radius: 50%;
+    overflow: hidden;
     position: absolute;
     top: 0;
     left: 25px;
@@ -48,9 +49,26 @@
 .nameAndBio{
     width: 80%;
 }
-.profileNameFlex{
+.profileNameFlexParrent{
     display: flex;
     justify-content: space-between;
+}
+.profileNameFlex{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.profileName{
+    font-family: var(--barlow);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--main-text-color);
+}
+.editProfileName{
+    font-size: 18px;
+    background: linear-gradient(180deg, #D8C281 0%, #AC9B69 100%) !important;
+    color: #fff;
+    cursor: pointer;
 }
 .profileLocationFlex{
     display: flex;

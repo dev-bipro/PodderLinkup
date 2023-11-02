@@ -4,7 +4,7 @@ import './MyProfile.css'
 import Container from '../../conponents/Container'
 import Image from '../../conponents/Image'
 import {FaRegEdit, FaLocationArrow} from 'react-icons/fa'
-import {CiEdit} from 'react-icons/ci'
+import {AiOutlineEdit} from 'react-icons/ai'
 import Paragraph from '../../conponents/Paragraph'
 import Flex from '../../conponents/Flex'
 import Heading from '../../conponents/Heading'
@@ -39,10 +39,10 @@ const MyProfile = () => {
               <Image className="profilePhoto" imageUrl={logedinData.photoURL} />
             </div>
             <div className="nameAndBio">
-              <Flex className="profileNameFlex">
-                <Flex>
-                  <Heading tagName="h2" title={logedinData.displayName}>
-                    <CiEdit />
+              <Flex className="profileNameFlexParrent">
+                <Flex className="profileNameFlex">
+                  <Heading tagName="h2" className="profileName" title={logedinData.displayName}>
+                    <AiOutlineEdit className="editProfileName" title="Edit Your Name" />
                   </Heading>
 
                 </Flex>
