@@ -197,6 +197,7 @@ const Registration = () => {
             <Paragraph className="navigatePage">Already  have an account ? <Link to="/">Sign In</Link></Paragraph>
         </div>
     </section>
+    <></>
   )
 }
 

@@ -82,3 +82,48 @@
     display: flex;
     gap: 10px;
 }
+.Bio{
+    
+    margin: 16px 0;
+}
+.bioText{
+    font-family: var(--barlow);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    color: var(--main-text-color);
+}
+.contactInfoBtn{
+    width: 20%;
+    text-transform: uppercase !important;
+    font-family: var(--nunito) !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+    color: #fff !important;
+    padding: 9px 0 !important;
+    border-radius: 8px !important;
+    background: var(--main-gradiant-color);
+    transition: .3s !important;
+    margin-bottom: 20px ;
+}
+.contactInfoBtn:hover{
+    background: var(--main-hover-gradiant-color);
+}
+.socialMediaHeading{
+    margin-bottom: 40px;
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    font-weight: 700 ;
+    font-size: 30px;
+    color: var(--main-text-color);
+}
+.socialMediaList{
+    display: flex;
+    gap: 20px;
+}
+.socialMediaList a {
+    font-size: 40px;
+}
+.facebookIconItem {
+    background: linear-gradient(120deg, #3B5998 0%, #fff 100%) !important;
+}

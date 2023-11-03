@@ -4,8 +4,8 @@ import { getAuth, updateProfile } from "firebase/auth";
 import './MyProfile.css'
 import Container from '../../conponents/Container'
 import Image from '../../conponents/Image'
-import {FaRegEdit, FaLocationArrow} from 'react-icons/fa'
-import {AiOutlineEdit} from 'react-icons/ai'
+import {FaRegEdit, FaLocationArrow, FaInstagramSquare, FaWhatsappSquare} from 'react-icons/fa'
+import {AiOutlineEdit, AiOutlineFacebook, AiFillLinkedin} from 'react-icons/ai'
 import Paragraph from '../../conponents/Paragraph'
 import Flex from '../../conponents/Flex'
 import Heading from '../../conponents/Heading'
@@ -16,6 +16,10 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import { setLogedIn } from '../../features/logdin/whoLogedin';
 import Alert from '@mui/material/Alert';
+import { Link } from 'react-router-dom';
+import List from '../../conponents/List'
+import ListItem from '../../conponents/ListItem'
+import ProfileNavBtn from '../../conponents/profile/ProfileNavBtn';
 
 
 const MyProfile = () => {
@@ -29,6 +33,8 @@ const MyProfile = () => {
   // updateName start
   const [nameForUpdate, setNameForUpdate] = useState("")
   const [nameForUpdateError, setNameForUpdateError] = useState("")
+  const [a, setA] = useState("Experienced MERN stack developer proficient in React, Node.js, MongoDB, and Express.js. Skilled in creating responsive, high-performance web applications. Committed to delivering user-friendly, scalable solutions. Strong in frontend and backend development, with a focus on efficiency and quality.")
+  console.log(a.length);
   // updateName end
   
   // modal part start
@@ -43,9 +49,14 @@ const MyProfile = () => {
     boxShadow: 24,
     p: 4,
   };
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [editNameOpen, setEditNameOpen] = useState(false);
+  const [contactInfoModalOpen, setContactInfoModalOpen] = useState(false);
+  const editNameModalOpenHandler = () => setEditNameOpen(true);
+  const contactInfoModalOpenHandler = () => setContactInfoModalOpen(true);
+  const handleClose = () => {
+    setEditNameOpen(false);
+    setContactInfoModalOpen(false);
+  }
   // modal part end
 
   useEffect(()=>{
@@ -85,24 +96,56 @@ const MyProfile = () => {
   }
 
   return (
+    <>
     <section id="profileTop">
       <div>
         <Modal
-          open={open}
+          open={editNameOpen || contactInfoModalOpen}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-          <Heading tagName="h2" className="updateNameHeading" title="update your name">
-            <>
-              {
-                nameForUpdateError && <Alert severity="error">{nameForUpdateError}</Alert>
-              }
-              <TextField name='updateName' onChange={changeHandler} type="text" className="regInput" id="outlined-basic" label="Type Your New Name" value={nameForUpdate} variant="outlined" />
-              <Button onClick={updateNameHandler} className="regBtn" variant="contained">update</Button>
-            </>
-          </Heading>
+            {
+              editNameOpen ?
+                <Heading tagName="h2" className="updateNameHeading" title="update your name">
+                  <>
+                    {
+                      nameForUpdateError && <Alert severity="error">{nameForUpdateError}</Alert>
+                    }
+                    <TextField name='updateName' onChange={changeHandler} type="text" className="regInput" id="outlined-basic" label="Type Your New Name" value={nameForUpdate} variant="outlined" />
+                    <Button onClick={updateNameHandler} className="regBtn" variant="contained">update</Button>
+                  </>
+                </Heading>
+              :
+                <Heading tagName="h3" className="socialMediaHeading" title="contact me">
+                  <List className="socialMediaList">
+                    <ListItem className="">
+                      <Link>
+                        <AiOutlineFacebook className="facebookIconItem" />
+                      </Link>
+                    </ListItem>
+
+                    <ListItem className="">
+                      <Link>
+                        <FaInstagramSquare className="instagramIconItem" />
+                      </Link>
+                    </ListItem>
+
+                    <ListItem className="">
+                      <Link>
+                        <AiFillLinkedin className="linkedinIconItem" />
+                      </Link>
+                    </ListItem>
+
+                    <ListItem className="">
+                      <Link>
+                        <FaWhatsappSquare className="whatsappIconItem" />
+                      </Link>
+                    </ListItem>
+                  </List>
+                </Heading>
+            }
           </Box>
         </Modal>
       </div>
@@ -123,7 +166,7 @@ const MyProfile = () => {
               <Flex className="profileNameFlexParrent">
                 <Flex className="profileNameFlex">
                   <Heading tagName="h2" className="profileName" title={logedinData.displayName}>
-                    <AiOutlineEdit className="editProfileName" onClick={handleOpen} title="Edit Your Name" />
+                    <AiOutlineEdit className="editProfileName" onClick={editNameModalOpenHandler} title="Edit Your Name" />
                   </Heading>
 
                 </Flex>
@@ -133,14 +176,22 @@ const MyProfile = () => {
                 </Flex>
               </Flex>
               <div className="Bio">
-                <Paragraph className="" title={""} />
+                <Paragraph className="bioText" title={a} />
               </div>
-              <Button className="regBtn" variant="contained">sign up</Button>
+              <Button onClick={contactInfoModalOpenHandler} className="contactInfoBtn" variant="contained">contact info</Button>
             </div>
           </Flex>
         </div>
       </Container>
     </section>
+    <section>
+      <Container>
+        <List>
+          <ProfileNavBtn />
+        </List>
+      </Container>
+    </section>
+    </>
   )
 }
 
