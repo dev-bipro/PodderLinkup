@@ -20,6 +20,7 @@ const User = () => {
             console.log(userArr);
         })
     },[])
+    const sentFriendRequest = ()=>{}
   return (
     <div className="userBox">
         <Heading tagName="h3" className="userBoxHeading" title="user list" />
