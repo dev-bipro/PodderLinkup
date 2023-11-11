@@ -19,7 +19,8 @@ import Alert from '@mui/material/Alert';
 import { Link } from 'react-router-dom';
 import List from '../../conponents/List'
 import ListItem from '../../conponents/ListItem'
-import ProfileNavBtn from '../../conponents/profile/ProfileNavBtn';
+import ProfileDettals from '../../conponents/profile/ProfileDettals';
+import ProfileFriendsDettels from '../../conponents/profile/ProfileFriendsDettels';
 
 
 const MyProfile = () => {
@@ -34,7 +35,33 @@ const MyProfile = () => {
   const [nameForUpdate, setNameForUpdate] = useState("")
   const [nameForUpdateError, setNameForUpdateError] = useState("")
   const [a, setA] = useState("Experienced MERN stack developer proficient in React, Node.js, MongoDB, and Express.js. Skilled in creating responsive, high-performance web applications. Committed to delivering user-friendly, scalable solutions. Strong in frontend and backend development, with a focus on efficiency and quality.")
-  console.log(a.length);
+
+  const changeHandler = (e)=>{
+    setNameForUpdate(e.target.value) ;
+    setNameForUpdateError("")
+  }
+
+  const updateNameHandler = ()=> {
+    if (!nameForUpdate) {
+      setNameForUpdateError("Please type your new name")
+    }
+    else{
+      updateProfile(user, {
+        displayName: nameForUpdate,
+      }).then(() => {
+        update(ref(db,"user/" + user.uid),{
+          ...myData,
+          fullName: nameForUpdate,
+        }).then(()=>{
+          localStorage.setItem('user',JSON.stringify(user)) ;
+          dispatch(setLogedIn(user))
+          setNameForUpdate("")
+          setOpen(false)
+        })
+      })
+    }
+  }
+
   // updateName end
   
   // modal part start
@@ -66,131 +93,123 @@ const MyProfile = () => {
     })
   },[])
 
-  const changeHandler = (e)=>{
-    setNameForUpdate(e.target.value) ;
-    setNameForUpdateError("")
-  }
+  // profile details part start
+  const [profileShow, setProfileShow] = useState("profile")
+  // profile details part end
 
-  const updateNameHandler = ()=> {
-    if (!nameForUpdate) {
-      setNameForUpdateError("Please type your new name")
-    }
-    else{
-      updateProfile(user, {
-        displayName: nameForUpdate,
-      }).then(() => {
-        update(ref(db,"user/" + user.uid),{
-          ...myData,
-          fullName: nameForUpdate,
-        }).then(()=>{
-          localStorage.setItem('user',JSON.stringify(user)) ;
-          dispatch(setLogedIn(user))
-          setNameForUpdate("")
-          setOpen(false)
-        })
-      }).catch((error) => {
-        // An error occurred
-        // ...
-      });
-    }
-  }
 
   return (
     <>
-    <section id="profileTop">
-      <div>
-        <Modal
-          open={editNameOpen || contactInfoModalOpen}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            {
-              editNameOpen ?
-                <Heading tagName="h2" className="updateNameHeading" title="update your name">
-                  <>
-                    {
-                      nameForUpdateError && <Alert severity="error">{nameForUpdateError}</Alert>
-                    }
-                    <TextField name='updateName' onChange={changeHandler} type="text" className="regInput" id="outlined-basic" label="Type Your New Name" value={nameForUpdate} variant="outlined" />
-                    <Button onClick={updateNameHandler} className="regBtn" variant="contained">update</Button>
-                  </>
-                </Heading>
-              :
-                <Heading tagName="h3" className="socialMediaHeading" title="contact me">
-                  <List className="socialMediaList">
-                    <ListItem className="">
-                      <Link>
-                        <AiOutlineFacebook className="facebookIconItem" />
-                      </Link>
-                    </ListItem>
-
-                    <ListItem className="">
-                      <Link>
-                        <FaInstagramSquare className="instagramIconItem" />
-                      </Link>
-                    </ListItem>
-
-                    <ListItem className="">
-                      <Link>
-                        <AiFillLinkedin className="linkedinIconItem" />
-                      </Link>
-                    </ListItem>
-
-                    <ListItem className="">
-                      <Link>
-                        <FaWhatsappSquare className="whatsappIconItem" />
-                      </Link>
-                    </ListItem>
-                  </List>
-                </Heading>
-            }
-          </Box>
-        </Modal>
-      </div>
-      <Container>
-        <div className="coverPicDiv">
-          <Image className="coverPic" imageUrl={myData?.coverPhotoURL} />
-          <div className="editCoverImage">
-            <FaRegEdit />
-            <Paragraph className="" title="edit cover photo" />
-          </div>
-        </div>
-        <div className="profileDittals">
-          <Flex className="profiledittalsFlex">
-            <div className="profilePhotoDiv">
-              <Image className="profilePhoto" imageUrl={logedinData.photoURL} />
-            </div>
-            <div className="nameAndBio">
-              <Flex className="profileNameFlexParrent">
-                <Flex className="profileNameFlex">
-                  <Heading tagName="h2" className="profileName" title={logedinData.displayName}>
-                    <AiOutlineEdit className="editProfileName" onClick={editNameModalOpenHandler} title="Edit Your Name" />
+      <section id="profileTop">
+        <div>
+          <Modal
+            open={editNameOpen || contactInfoModalOpen}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              {
+                editNameOpen ?
+                  <Heading tagName="h2" className="updateNameHeading" title="update your name">
+                    <>
+                      {
+                        nameForUpdateError && <Alert severity="error">{nameForUpdateError}</Alert>
+                      }
+                      <TextField name='updateName' onChange={changeHandler} type="text" className="regInput" id="outlined-basic" label="Type Your New Name" value={nameForUpdate} variant="outlined" />
+                      <Button onClick={updateNameHandler} className="regBtn" variant="contained">update</Button>
+                    </>
                   </Heading>
+                :
+                  <Heading tagName="h3" className="socialMediaHeading" title="contact me">
+                    <List className="socialMediaList">
+                      <ListItem className="">
+                        <Link>
+                          <AiOutlineFacebook className="facebookIconItem" />
+                        </Link>
+                      </ListItem>
 
-                </Flex>
-                <Flex className="profileLocationFlex">
-                  <FaLocationArrow />
-                  <Paragraph className="" title="Saint Petersburg, Russian Federation" />
-                </Flex>
-              </Flex>
-              <div className="Bio">
-                <Paragraph className="bioText" title={a} />
-              </div>
-              <Button onClick={contactInfoModalOpenHandler} className="contactInfoBtn" variant="contained">contact info</Button>
-            </div>
-          </Flex>
+                      <ListItem className="">
+                        <Link>
+                          <FaInstagramSquare className="instagramIconItem" />
+                        </Link>
+                      </ListItem>
+
+                      <ListItem className="">
+                        <Link>
+                          <AiFillLinkedin className="linkedinIconItem" />
+                        </Link>
+                      </ListItem>
+
+                      <ListItem className="">
+                        <Link>
+                          <FaWhatsappSquare className="whatsappIconItem" />
+                        </Link>
+                      </ListItem>
+                    </List>
+                  </Heading>
+              }
+            </Box>
+          </Modal>
         </div>
-      </Container>
-    </section>
-    <section>
-      <Container>
-        <List>
-          <ProfileNavBtn />
-        </List>
-      </Container>
-    </section>
+        <Container>
+          <div className="coverPicDiv">
+            <Image className="coverPic" imageUrl={myData?.coverPhotoURL} />
+            <div className="editCoverImage">
+              <FaRegEdit />
+              <Paragraph className="" title="edit cover photo" />
+            </div>
+          </div>
+          <div className="profileDittals">
+            <Flex className="profiledittalsFlex">
+              <div className="profilePhotoDiv">
+                <Image className="profilePhoto" imageUrl={logedinData.photoURL} />
+              </div>
+              <div className="nameAndBio">
+                <Flex className="profileNameFlexParrent">
+                  <Flex className="profileNameFlex">
+                    <Heading tagName="h2" className="profileName" title={logedinData.displayName}>
+                      <AiOutlineEdit className="editProfileName" onClick={editNameModalOpenHandler} title="Edit Your Name" />
+                    </Heading>
+
+                  </Flex>
+                  <Flex className="profileLocationFlex">
+                    <FaLocationArrow />
+                    <Paragraph className="" title="Saint Petersburg, Russian Federation" />
+                  </Flex>
+                </Flex>
+                <div className="Bio">
+                  <Paragraph className="bioText" title={a} />
+                </div>
+                <Button onClick={contactInfoModalOpenHandler} className="contactInfoBtn" variant="contained">contact info</Button>
+              </div>
+            </Flex>
+          </div>
+        </Container>
+      </section>
+      <section id="profileBtnSec">
+        <Container>
+          <List className="profileNavBtnFlex">
+            <ListItem onClick={()=>setProfileShow("profile")} className={`proNavBtn ${profileShow == "profile" && "active"}`}>
+              <Paragraph className={""} title="profile" />
+            </ListItem>
+            <ListItem onClick={()=>setProfileShow("friends")} className={`proNavBtn ${profileShow == "friends" && "active"}`} >
+              <Paragraph className={""} title="friends" />
+            </ListItem>
+            <ListItem onClick={()=>setProfileShow("post")} className={`proNavBtn ${profileShow == "post" && "active"}`}>
+              <Paragraph className={""} title="post" />
+            </ListItem>
+          </List>
+        </Container>
+      </section>
+      {
+        profileShow == "profile" ?
+          <ProfileDettals />
+        : profileShow == "friends"?
+          <ProfileFriendsDettels />
+        :
+          ""
+      }
     </>
   )
 }

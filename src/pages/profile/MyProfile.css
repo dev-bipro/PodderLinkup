@@ -26,6 +26,9 @@
     background-color: #fff;
     cursor: pointer;
 }
+.profileDittals{
+    background: #FFF;
+}
 .profiledittalsFlex{
     padding: 25px 25px 35px 0;
     display: flex;
@@ -126,4 +129,299 @@
 }
 .facebookIconItem {
     background: linear-gradient(120deg, #3B5998 0%, #fff 100%) !important;
+}
+#profileBtnSec{
+    padding: 30px 0;
+}
+.profileNavBtnFlex{
+    display: flex;
+    border-bottom: 2px solid #e7e7e7;
+}
+.proNavBtn{
+    width: 300px;
+    height: 40px;
+    background: #fff;
+    border: 2px solid #e7e7e7;
+    text-align: center;
+    cursor: pointer;
+}
+.proNavBtn p {
+    text-transform: uppercase;
+    font-family: var(--barlow);
+    font-weight: 500 ;
+    font-size: 12px;
+    line-height: 40px;
+    color: var(--main-text-color);
+}
+
+.profileNavBtnFlex .active p {
+    color: #fff;
+    position: relative;
+    z-index: 1;
+    transition: all linear .3s;
+}
+.profileNavBtnFlex .active p::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    border-radius: 4px 4px 0 0;
+    background: var(--main-gradiant-color);
+    z-index: -1;
+}
+#profileAbout{
+    margin-bottom: 30px;
+}
+.profileCatagoryBtn{
+    padding: 10px 20px !important;
+    border-radius: 5px !important;
+    background: #FFF !important;
+    text-transform: capitalize !important;
+    font-family: var(--nunito) !important;
+    font-weight: 600 !important;
+    color: var(--secondery-text-color) !important;
+    transition: all linear .3s !important;
+}
+.profileCatagoryBtn:hover{
+    background: var(--main-hover-gradiant-color) !important;
+    color: #fff !important;
+}
+.profileCatagoryBox{
+    padding: 30px;
+    background: #fff;
+    border-radius: 4px;
+}
+.profileCatagoryHeadingFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.profileCatagoryHeading{
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--main-text-color);
+}
+.aboutIcons{
+    display: flex;
+    gap: 10px;
+}
+.deleteProfileCatagory{
+    font-size: 18px;
+    background: linear-gradient(180deg, #df1b1b 0%, #d62121 100%) !important;
+    color: #fff;
+    cursor: pointer;
+}
+.aboutTextPra{
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    font-weight: 400 ;
+    font-size: 14px;
+    line-height: 150%;
+    color: var(--main-text-color);
+}
+
+
+
+.profileCatagoryMainModalDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.uploadProfileCatagoryImageLabel{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.uploadProfileCatagoryImageDiv{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: green;
+    overflow: hidden;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.uploadProfileCatagoryImage{
+    width: 100%;
+    height: 100%;
+    background-position: 0 0;
+    background-size: cover;
+    object-fit: cover;
+}
+.uploadProfileCatagoryImageInput{
+    display: none;
+}
+.uploadProfileCatagoryImagePra{
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    font-weight: 400 ;
+    font-size: 14px;
+    line-height: 150%;
+    color: var(--main-text-color);
+    margin-bottom: 20px;
+}
+
+.catagoriItemLogoDiv {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.catagoriItemLogo {
+    width: 100%;
+    height: 100%;
+}
+.catagoriItemBox {
+    display: flex;
+    gap: 20px;
+}
+.profileCatagoryJobHeadingFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.jobTitle{
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    font-weight: 500;
+    font-size: 16px;
+}
+.catagoriItemContent{
+    width: 100%;
+}
+.subTitleAndConpanyName{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.subJob{
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    font-weight: 400;
+    font-size: 12px;
+}
+.conpanyName{
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    font-weight: 300;
+    font-size: 12px;
+}
+.dateClass{
+    display: flex;
+    align-items: center;
+}
+.jobTime{
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    font-weight: 300 ;
+    font-size: 14px;
+    color: #0275b1;
+}
+
+#profileExperience{
+    margin-bottom: 40px;
+}
+
+.educationInfo {
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.userBox{
+    width: 100%;
+    height: 500px;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 2px 10px 19px -3px rgba(0,0,0,0.1);
+}
+.userBoxHeading {
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    font-weight: 700;
+    font-size: 25px;
+    color: var(--main-text-color);
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--secondery-text-color);
+}
+.userBoxHeading::after {
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    font-weight: 700;
+    font-size: 25px;
+    color: var(--main-text-color);
+}
+
+.usersBox{
+    padding: 0 10px;
+    
+}
+.user{
+    width: 100%;
+    padding: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 16px 11px -3px rgba(0,0,0,0.1);
+}
+.userImageFlex{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.userImageDiv{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #0275b1;
+    overflow: hidden;
+}
+.userImage{
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: cover;
+    background-size: cover;
+
+}
+.userName{
+    font-family: var(--barlow);
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--main-text-color);
+    margin-bottom: 10px;
+}
+.userTime{
+    font-family: var(--nunito);
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--main-text-color);
+    margin-bottom: 10px;
+}
+
+.addFriendBtn{
+    width: 130px;
+    text-transform: capitalize !important;
+    font-family: var(--nunito) !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    color: #fff !important;
+    padding: 8px 0 !important;
+    border-radius: 85px !important;
+    background: var(--main-gradiant-color);
+    transition: .3s !important;
+}
+.addFriendBtn:hover{
+    background: var(--main-hover-gradiant-color);
 }

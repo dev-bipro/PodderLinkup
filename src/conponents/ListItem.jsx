@@ -1,8 +1,8 @@
 import React from 'react'
 
-const ListItem = ({className, title, children}) => {
+const ListItem = ({onClick, className, title, children}) => {
   return (
-    <li className={className}>{title}{children}</li>
+    <li onClick={onClick} className={className}>{title}{children}</li>
   )
 }
 

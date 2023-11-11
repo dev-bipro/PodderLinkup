@@ -14,7 +14,7 @@ const Nav = () => {
     const location = useLocation()
     console.log(location.pathname);
   return (
-    <nav>
+    <nav id="nav">
         <Container>
             <Flex className="navContent">
                 <div className="navLogoDiv">
