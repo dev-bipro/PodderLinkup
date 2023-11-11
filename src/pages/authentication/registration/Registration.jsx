@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import './registration.css'
+import './Registration.css'
 import Image from '../../../conponents/Image'
 import myLogo from '../../../assets/myLogoLikeLinkdin.svg'
 import Heading from '../../../conponents/Heading'
