@@ -3,6 +3,9 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import Container from '../Container';
 import User from '../User';
+import FriendRequest from '../FriendRequest';
+import Friends from '../Friends';
+import BlockFriends from '../BlockFriends';
 
 const ProfileFriendsDettels = () => {
     // const Item = styled(Paper)(({ theme }) => ({
@@ -22,13 +25,13 @@ const ProfileFriendsDettels = () => {
                     <User />
                 </Grid>
                 <Grid item xs={6}>
-                    <h1>xs=4</h1>
+                    <FriendRequest />
                 </Grid>
                 <Grid item xs={6}>
-                    <h1>xs=4</h1>
+                    <Friends />
                 </Grid>
                 <Grid item xs={6}>
-                    <h1>xs=8</h1>
+                    <BlockFriends />
                 </Grid>
             </Grid>
         </Container>

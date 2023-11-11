@@ -30,17 +30,17 @@ const MyProfile = () => {
   const logedinData = useSelector(state => state.logedin.value) ;
   const dispatch = useDispatch() ;
   const [myData, setMyData] = useState({}) ;
-
+  
   // updateName start
   const [nameForUpdate, setNameForUpdate] = useState("")
   const [nameForUpdateError, setNameForUpdateError] = useState("")
   const [a, setA] = useState("Experienced MERN stack developer proficient in React, Node.js, MongoDB, and Express.js. Skilled in creating responsive, high-performance web applications. Committed to delivering user-friendly, scalable solutions. Strong in frontend and backend development, with a focus on efficiency and quality.")
-
+  
   const changeHandler = (e)=>{
     setNameForUpdate(e.target.value) ;
     setNameForUpdateError("")
   }
-
+  
   const updateNameHandler = ()=> {
     if (!nameForUpdate) {
       setNameForUpdateError("Please type your new name")
@@ -61,7 +61,7 @@ const MyProfile = () => {
       })
     }
   }
-
+  
   // updateName end
   
   // modal part start
@@ -85,16 +85,28 @@ const MyProfile = () => {
     setContactInfoModalOpen(false);
   }
   // modal part end
-
+  
   useEffect(()=>{
     const myDataRef = ref(db, 'user/' + logedinData.uid );
     onValue(myDataRef, (snapshot) => {
       setMyData(snapshot.val())
     })
+    onValue(ref(db,"friendsRequest"),(snapshot)=>{
+        const arr = [] ;
+        snapshot.forEach((item)=>{
+            // console.log(item.val().senderId);
+            if (item.val().receiverId == logedinData.uid) {
+                arr.push({...item.val(),key:item.key})
+            }
+        })
+        setFriendsReqestArr(arr) ;
+    })
   },[])
-
+  
   // profile details part start
   const [profileShow, setProfileShow] = useState("profile")
+  const [friendsRequestArr, setFriendsReqestArr] = useState([]) ;
+
   // profile details part end
 
 
@@ -193,8 +205,15 @@ const MyProfile = () => {
             <ListItem onClick={()=>setProfileShow("profile")} className={`proNavBtn ${profileShow == "profile" && "active"}`}>
               <Paragraph className={""} title="profile" />
             </ListItem>
-            <ListItem onClick={()=>setProfileShow("friends")} className={`proNavBtn ${profileShow == "friends" && "active"}`} >
-              <Paragraph className={""} title="friends" />
+            <ListItem onClick={()=>setProfileShow("friends")} className={`proNavBtn counterRelative ${profileShow == "friends" && "active"}`} >
+              <>
+                <Paragraph className={""} title="friends" />
+                {
+                  friendsRequestArr.length ?
+                    <Paragraph className="frRequestCount" title={friendsRequestArr.length} />
+                  :""
+                }
+              </>
             </ListItem>
             <ListItem onClick={()=>setProfileShow("post")} className={`proNavBtn ${profileShow == "post" && "active"}`}>
               <Paragraph className={""} title="post" />
