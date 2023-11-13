@@ -284,7 +284,7 @@ const ProfileDettals = () => {
         if (experienceInputImage) {
             const storageRef = imageRef(storage, experienceInputValue.imageName);
             uploadBytes(storageRef, experienceInputImage).then((snapshot) => {
-                getDownloadURL(storageRef).then((downloadURL) => {
+                getDownloadURL(imageRef(storage, snapshot.metadata.fullPath)).then((downloadURL) => {
                     update(ref(db, "profileExperience/" + experienceInputValue.groupKey),{
                         ...experienceInputValue,
                         experienceImage : downloadURL,

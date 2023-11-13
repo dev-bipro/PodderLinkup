@@ -3,6 +3,8 @@ import './Home.css'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Nav from '../../conponents/nav/Nav'
+import Container from '../../conponents/Container'
+import NewPost from '../../conponents/post/NewPost'
 
 const Home = () => {
   const navigate = useNavigate();
@@ -15,9 +17,9 @@ const Home = () => {
       }
     })
   return (
-    <section>
-      <h1>home</h1>
-    </section>
+    <>
+      <NewPost />
+    </>
   )
 }
 

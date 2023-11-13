@@ -1,0 +1,200 @@
+#newPost {
+    margin-top: 40px;
+}
+.newPostContent {
+    width: 100%;
+    padding: 25px 30px;
+    border-radius: 4px;
+    background-color: #fff;
+}
+.newPostHeading {
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--main-text-color);
+    padding-bottom: 10px;
+    border-bottom: 2px solid #F4F4F4;
+    margin-bottom: 20px;
+}
+.newPostInputFlex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.newPostInput{
+    width: 90%;
+    max-height: 80px;
+    padding: 4px;
+    font-family: var(--barlow);
+    font-size: 18px;
+    border: none;
+    outline: none;
+}
+.newPostInput::placeholder{
+    font-family: var(--barlow);
+    font-size: 18px;
+}
+.newPostInput:focus{
+    font-family: var(--barlow);
+    font-size: 18px;
+    border: none;
+}
+.newPostBtnFlex {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.newPostPicBtnDiv{
+    margin-left: 10px;
+    cursor: pointer;
+}
+.newPostPicBtn{
+    font-size: 20px;
+}
+
+.newPostBtn{
+    padding: 10px 20px !important;
+    border-radius: 5px !important;
+    background: var(--main-gradiant-color) !important;
+    transition: all linear .3s !important;
+    color: #fff !important;
+}
+.newPostBtn:hover{
+    background: var(--main-hover-gradiant-color) !important;
+}
+
+.newPostPrevewImageDiv {
+    margin-top: 40px;
+    width: 100%;
+    height: 70vh;
+    text-align: center;
+}
+.newPostPrevewImage {
+    height: 100%;
+}
+.newPostPrevewVideoDiv {
+    margin-top: 40px;
+    width: 100%;
+    height: 50vh;
+}
+#post {
+    margin-top: 40px;
+}
+.PostContent {
+    width: 100%;
+    padding: 25px 30px;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-top: 30px;
+}
+.postCtrlBtnDiv {
+    display: flex;
+    justify-content: end;
+    font-size: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #F4F4F4;
+    margin-bottom: 20px;
+}
+.postCtrlBtn {
+    cursor: pointer;
+}
+
+.whoPost {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.postPofilePicDiv {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.postProfilePic {
+    width: 100%;
+    height: 100%;
+}
+.postBy {
+    font-family: var(--barlow);
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--main-text-color);
+    margin-bottom: 8px;
+}
+.postTime {
+    font-family: var(--barlow);
+    font-weight: 300;
+    font-size: 13px;
+    color: var(--main-text-color);
+    margin-bottom: 8px;
+}
+.PostPrevewVideoDiv {
+    margin-top: 40px;
+    width: 100%;
+}
+.postFooter {
+    padding-top: 20px;
+    /* width: 100%; */
+    border-top: 2px solid red;
+    position: relative;
+}
+.postLikeCommentBtns {
+    display: flex;
+    gap: 100px;
+    align-items: center;
+}
+.likeBtns {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: 1px solid black;
+}
+.likeBtn {
+    display: inline-block;
+    padding: 12px 20px;
+    border-radius: 4px;
+    border: 1px solid var(--secondery-text-color);
+    cursor: pointer;
+}
+.unlikeBtn {
+    display: inline-block;
+    padding: 12px 20px;
+    border-radius: 4px;
+    border: 1px solid var(--secondery-text-color);
+    cursor: pointer;
+    color: var(--secondery-text-color);
+}
+.likeNumber {
+    position: absolute;
+    top: 50%;
+    left: 80px;
+}
+.commentOpenBtn {
+    display: inline-block;
+    padding: 15px 20px;
+    border-radius: 4px;
+    /* color: var(--secondery-text-color); */
+    border: 1px solid var(--secondery-text-color);
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--main-text-color);
+    cursor: pointer;
+}
+.commentBox {
+    width: 100%;
+    padding: 60px;
+}
+.commentInpFlex {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--secondery-text-color);
+}
+.addCommentInp {
+    width: 90%;
+}

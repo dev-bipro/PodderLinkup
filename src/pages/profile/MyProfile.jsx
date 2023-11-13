@@ -56,7 +56,7 @@ const MyProfile = () => {
           localStorage.setItem('user',JSON.stringify(user)) ;
           dispatch(setLogedIn(user))
           setNameForUpdate("")
-          setOpen(false)
+          setEditNameOpen(false)
         })
       })
     }

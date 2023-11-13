@@ -32,7 +32,7 @@ const Nav = () => {
                     <div className="navProfileImageDiv">
                         <Image className="navProfileImage" imageUrl={logedinData.photoURL} />
                     </div>
-                    <Link to="/myProfile">{logedinData.displayName}</Link>
+                    <Link to="/me">{logedinData.displayName}</Link>
                 </Flex>
             </Flex>
         </Container>
