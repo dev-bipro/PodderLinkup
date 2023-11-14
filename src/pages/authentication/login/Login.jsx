@@ -24,7 +24,7 @@ const Login = () => {
         if (logedinData) {
             navigate("/home")
         }
-    })
+    },[])
     // console.log(logedinData);
 
     const [formData, setFormData] = useState({
