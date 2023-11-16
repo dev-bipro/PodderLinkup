@@ -14,7 +14,7 @@ import Post from './Post'
 const NewPost = () => {
     const storage = getStorage() ;
     const db = getDatabase() ;
-    const logedinData = useSelector((state) => state.logedin.value)
+    const logedinData = useSelector((state) => state.logedin.value) ;
     const [inpValue, setInpValue] = useState("") ;
     const [inpImage, setInpImage] = useState(null) ;
     const [inpVideo, setInpVideo] = useState(null) ;
@@ -37,6 +37,9 @@ const NewPost = () => {
     }
     const clickHandler = () =>{
 
+        const idForPost = `postid${Date.now()}` ;
+        console.log(idForPost);
+
         if (inpValue && inpImage && inpVideo) {
             const videoStorageRef = storRef(storage, inpVideo?.name + Date.now());
             const imageStorageRef = storRef(storage, inpImage?.name + Date.now());
@@ -46,7 +49,7 @@ const NewPost = () => {
                     
                     uploadBytes(imageStorageRef, inpImage).then((imageSnapshot) => {
                         getDownloadURL(storRef(storage, imageSnapshot.metadata.fullPath)).then((imageUrl) => {
-                            set(push(ref(db, "post")),{
+                            set(ref(db, "post/"+idForPost),{
                                 postBy:logedinData.uid,
                                 postByName:logedinData.displayName,
                                 postByImage:logedinData.photoURL,
@@ -76,7 +79,7 @@ const NewPost = () => {
                         
                         uploadBytes(imageStorageRef, inpImage).then((imageSnapshot) => {
                             getDownloadURL(storRef(storage, imageSnapshot.metadata.fullPath)).then((imageUrl) => {
-                                set(push(ref(db, "post")),{
+                                set(ref(db, "post/"+idForPost),{
                                     postBy:logedinData.uid,
                                     postByName:logedinData.displayName,
                                     postByImage:logedinData.photoURL,
@@ -99,7 +102,7 @@ const NewPost = () => {
                 
                 uploadBytes(imageStorageRef, inpImage).then((imageSnapshot) => {
                     getDownloadURL(storRef(storage, imageSnapshot.metadata.fullPath)).then((imageUrl) => {
-                        set(push(ref(db, "post")),{
+                        set(ref(db, "post/"+idForPost),{
                             postBy:logedinData.uid,
                             postByName:logedinData.displayName,
                             postByImage:logedinData.photoURL,
@@ -119,7 +122,7 @@ const NewPost = () => {
 
                 uploadBytes(videoStorageRef, inpVideo).then((videoSnapshot) => {
                     getDownloadURL(storRef(storage, videoSnapshot.metadata.fullPath)).then((videoUrl) => {
-                        set(push(ref(db, "post")),{
+                        set(ref(db, "post/"+idForPost),{
                             postBy:logedinData.uid,
                             postByName:logedinData.displayName,
                             postByImage:logedinData.photoURL,
@@ -141,7 +144,7 @@ const NewPost = () => {
 
                     uploadBytes(videoStorageRef, inpVideo).then((videoSnapshot) => {
                         getDownloadURL(storRef(storage, videoSnapshot.metadata.fullPath)).then((videoUrl) => {
-                            set(push(ref(db, "post")),{
+                            set(ref(db, "post/"+idForPost),{
                                 postBy:logedinData.uid,
                                 postByName:logedinData.displayName,
                                 postByImage:logedinData.photoURL,
@@ -158,7 +161,7 @@ const NewPost = () => {
                     const imageStorageRef = storRef(storage, inpImage?.name + Date.now());
                     uploadBytes(imageStorageRef, inpImage).then((imageSnapshot) => {
                         getDownloadURL(storRef(storage, imageSnapshot.metadata.fullPath)).then((imageUrl) => {
-                            set(push(ref(db, "post")),{
+                            set(ref(db, "post/"+idForPost),{
                                 postBy:logedinData.uid,
                                 postByName:logedinData.displayName,
                                 postByImage:logedinData.photoURL,
@@ -172,7 +175,7 @@ const NewPost = () => {
                     });
                 }
                 else if (inpValue) {
-                    set(push(ref(db, "post")),{
+                    set(ref(db, "post/"+idForPost),{
                         postBy:logedinData.uid,
                         postByName:logedinData.displayName,
                         postByImage:logedinData.photoURL,
@@ -192,7 +195,8 @@ const NewPost = () => {
                 <div className="newPostContent">
                     <Heading tagName="h3" className="newPostHeading" title="add new post" />
                     <Flex className="newPostInputFlex">
-                        <input onChange={changeHandler} name="newPostTextInp" className="newPostInput" type="text" placeholder="What’s on your mind?" value={inpValue} />
+                        {/* <input onChange={changeHandler} name="newPostTextInp" className="newPostInput" type="text" placeholder="What’s on your mind?" value={inpValue} /> */}
+                        <textarea onChange={changeHandler} name="newPostTextInp" className="newPostInput" type="text" placeholder="What’s on your mind?" value={inpValue} cols="30" rows="10" />
                         <Flex className="newPostBtnFlex">
                             <label className="newPostPicBtnDiv">
                                 <ImFilePicture className="newPostPicBtn" />

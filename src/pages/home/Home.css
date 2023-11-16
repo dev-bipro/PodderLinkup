@@ -97,8 +97,22 @@
     border-bottom: 2px solid #F4F4F4;
     margin-bottom: 20px;
 }
-.postCtrlBtn {
+.postEditDelBtns {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.postDelBtn {
+    font-size: 24px;
+}
+.postDelBtn:hover {
     cursor: pointer;
+    color: #F3786F;
+    font-size: 24px;
+}
+.postEditBtn:hover {
+    cursor: pointer;
+    color: var(--secondery-text-color);
 }
 
 .whoPost {
@@ -138,7 +152,7 @@
 .postFooter {
     padding-top: 20px;
     /* width: 100%; */
-    border-top: 2px solid red;
+    border-top: 1px solid var(--secondery-text-color);
     position: relative;
 }
 .postLikeCommentBtns {
@@ -172,19 +186,14 @@
     top: 50%;
     left: 80px;
 }
-.commentOpenBtn {
-    display: inline-block;
-    padding: 15px 20px;
-    border-radius: 4px;
-    /* color: var(--secondery-text-color); */
-    border: 1px solid var(--secondery-text-color);
-    text-transform: capitalize;
-    font-family: var(--barlow);
-    font-weight: 600;
-    font-size: 18px;
-    color: var(--main-text-color);
-    cursor: pointer;
+.commentOpenBtns {
+    display: flex;
+    gap: 100px;
+    align-items: center;
 }
+
+
+
 .commentBox {
     width: 100%;
     padding: 60px;
