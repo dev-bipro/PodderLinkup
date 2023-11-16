@@ -3,10 +3,11 @@ import Flex from '../Flex'
 import {MdDelete} from 'react-icons/md'
 import {FcLike} from 'react-icons/fc'
 import {FaEdit} from 'react-icons/fa'
-import {BiSolidMessage, BiSolidMessageX, BiSolidSend} from 'react-icons/bi'
+import {BiSolidMessage, BiSolidMessageX, BiSolidSend, BiSolidMessageRoundedEdit} from 'react-icons/bi'
 import {RiDislikeFill} from 'react-icons/ri'
 import {ImFilePicture} from 'react-icons/im'
 import {BsFillSendFill} from 'react-icons/bs'
+import {MdDeleteForever} from 'react-icons/md'
 import Heading from '../Heading'
 import Image from '../Image'
 import { deleteObject, getDownloadURL, getStorage, ref as storRef, uploadBytes } from 'firebase/storage'
@@ -33,6 +34,11 @@ const Post = () => {
     const [postArr, setPostArr] = useState([]) ;
     const [postLikeArr, setPostLikeArr] = useState([]) ;
     const [postCommentsShow, setPostCommentsShow] = useState("") ;
+    const [postCommentArr, setPostCommentArr] = useState([]) ;
+    const [commentArr, setCommentArr] = useState([]) ;
+
+    const [commentInpValue, setCommentInpValue] = useState("") ;
+    const [forEditCommentValue, setForEditCommentValue] = useState(null) ;
 
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
@@ -53,7 +59,26 @@ const Post = () => {
             })
             setPostLikeArr(arr)
         })
+        onValue(ref(db, "comments"),(snapshot)=>{
+            let arr = [] ;
+            snapshot.forEach((item)=>{
+                arr.push({...item.val(),key:item.key}) ;
+            })
+            setCommentArr(arr)
+        })
     },[])
+    useEffect(()=>{
+        onValue(ref(db, "comments"),(snapshot)=>{
+            let arr = [] ;
+            snapshot.forEach((item)=>{
+                if (item.val().commentTo == postCommentsShow) {
+
+                    arr.push({...item.val(),key:item.key}) ;
+                }
+            })
+            setPostCommentArr(arr)
+        })
+    },[postCommentsShow])
 
     const style = {
         position: 'absolute',
@@ -103,6 +128,12 @@ const Post = () => {
                                 remove(ref(db, "postLike/" + itm.key))
                             }
                         })
+
+                        commentArr.map((commentItem)=>{
+                            if (item.key == commentItem.commentTo) {
+                                remove(ref(db, "comments/" + commentItem.key))
+                            }
+                        })
                     })
                 })
             })
@@ -117,6 +148,12 @@ const Post = () => {
                                     remove(ref(db, "postLike/" + itm.key))
                                 }
                             })
+    
+                            commentArr.map((commentItem)=>{
+                                if (item.key == commentItem.commentTo) {
+                                    remove(ref(db, "comments/" + commentItem.key))
+                                }
+                            })
                         })
                     })
                 })
@@ -129,6 +166,12 @@ const Post = () => {
                                 remove(ref(db, "postLike/" + itm.key))
                             }
                         })
+
+                        commentArr.map((commentItem)=>{
+                            if (item.key == commentItem.commentTo) {
+                                remove(ref(db, "comments/" + commentItem.key))
+                            }
+                        })
                     })
                 })
             }
@@ -138,6 +181,12 @@ const Post = () => {
                         postLikeArr.map((itm)=>{
                             if (item.key == itm.postId) {
                                 remove(ref(db, "postLike/" + itm.key))
+                            }
+                        })
+
+                        commentArr.map((commentItem)=>{
+                            if (item.key == commentItem.commentTo) {
+                                remove(ref(db, "comments/" + commentItem.key))
                             }
                         })
                     })
@@ -153,6 +202,12 @@ const Post = () => {
                                     remove(ref(db, "postLike/" + itm.key))
                                 }
                             })
+    
+                            commentArr.map((commentItem)=>{
+                                if (item.key == commentItem.commentTo) {
+                                    remove(ref(db, "comments/" + commentItem.key))
+                                }
+                            })
                         })
                     })
                 }
@@ -164,6 +219,12 @@ const Post = () => {
                                     remove(ref(db, "postLike/" + itm.key))
                                 }
                             })
+    
+                            commentArr.map((commentItem)=>{
+                                if (item.key == commentItem.commentTo) {
+                                    remove(ref(db, "comments/" + commentItem.key))
+                                }
+                            })
                         })
                     })
                 }
@@ -172,6 +233,12 @@ const Post = () => {
                         postLikeArr.map((itm)=>{
                             if (item.key == itm.postId) {
                                 remove(ref(db, "postLike/" + itm.key))
+                            }
+                        })
+
+                        commentArr.map((commentItem)=>{
+                            if (item.key == commentItem.commentTo) {
+                                remove(ref(db, "comments/" + commentItem.key))
                             }
                         })
                     })
@@ -520,6 +587,63 @@ const Post = () => {
         })
 
     }
+    
+    const commentChangeHandler = (e)=>{
+        setCommentInpValue(e.target.value) ;
+    }
+    
+    const addCommentHandler = (item)=>{
+        if (commentInpValue && !forEditCommentValue) {
+            
+            set(push(ref(db, "comments")),{
+                commentBy: logedinData.uid,
+                commentByImage: logedinData.photoURL,
+                commentByName: logedinData.displayName,
+                postBy: item.postBy,
+                postByImage: item.postByImage,
+                postByName: item.postByName,
+                commentTo: item.key,
+                commentText: commentInpValue,
+                commentDate:`${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+            }).then(()=>{
+                update(ref(db,"post/"+item.key),{
+                    ...item,
+                    commentsNumber: item.commentsNumber ? (item.commentsNumber+1) : (0+1)
+                    
+                }).then(()=>{
+                    setCommentInpValue("") ;
+                })
+            })
+        }
+        else if (forEditCommentValue) {
+            update(ref(db, "comments/"+forEditCommentValue.key),{
+                ...forEditCommentValue,
+                commentText: commentInpValue,
+            }).then(()=>{
+                setCommentInpValue("") ;
+                setForEditCommentValue(null)
+            })
+        }
+    }
+    const deleteComment = (commentKey,postItem)=>{
+        remove(ref(db,"comments/"+commentKey)).then(()=>{
+            update(ref(db,"post/"+postItem.key),{
+                ...postItem,
+                commentsNumber: (postItem.commentsNumber-1)
+
+            })
+        })
+
+    }
+    const forEditComment = (item)=>{
+        setForEditCommentValue({
+            ...item
+        })
+        setCommentInpValue(item.commentText)
+
+    }
+    
+
   return (
 
     <>
@@ -532,7 +656,7 @@ const Post = () => {
             >
                 <Box sx={style}>
                     <div className="newPostContent">
-                        <Heading tagName="h3" className="newPostHeading" title="add new post" />
+                        <Heading tagName="h3" className="newPostHeading" title="edit your post" />
                         <Flex className="newPostInputFlex">
                             {/* <input onChange={changeHandler} name="newPostTextInp" className="newPostInput" type="text" placeholder="What’s on your mind?" value={inpValue} /> */}
                             <textarea onChange={changeHandler} name="newPostTextInp" className="newPostInput" type="text" placeholder="What’s on your mind?" value={inpValue} cols="30" rows="10" />
@@ -626,26 +750,20 @@ const Post = () => {
                                                     <RiDislikeFill />
                                                 </div>
                                         }
-                                        <Paragraph className="likeNumber">{item.likeNumber ? item.likeNumber + (item.likeNumber == 1 ? "    Like" : "   likes") : ""}</Paragraph>
+                                        <Paragraph className="likeNumber">{item.likeNumber ? item.likeNumber + (item.likeNumber <= 1 ? "    Like" : "   likes") : ""}</Paragraph>
                                     </Flex>
-                                    {
-                                        postCommentsShow == item.key ?
-                                            <Flex className="commentOpenBtns">
-                                                
+                                        {
+                                            postCommentsShow == item.key ?
+                                                    
                                                 <div onClick={()=>setPostCommentsShow("")} className="unlikeBtn"><BiSolidMessageX /></div>
+                                                    
                                                 
-                                                <Paragraph className="likeNumber">{item.likeNumber ? item.likeNumber + (item.likeNumber == 1 ? "    Like" : "   likes") : ""}</Paragraph>
-                                            </Flex>
-
-                                        :
-                                            <Flex className="commentOpenBtns">
+                                            :
                                                 
                                                 <div onClick={()=>setPostCommentsShow(item.key)} className="unlikeBtn"><BiSolidMessage /></div>
                                                 
-                                                <Paragraph className="likeNumber">{item.likeNumber ? item.likeNumber + (item.likeNumber == 1 ? "    Like" : "   likes") : ""}</Paragraph>
-                                            </Flex>
-
-                                    }
+                                        }
+                                        <Paragraph className="commentsNumber">{item.commentsNumber ? item.commentsNumber + (item.commentsNumber <= 1 ? "    comment" : "   comments") : ""}</Paragraph>
                                 </Flex>
                             </div>
                             
@@ -657,10 +775,45 @@ const Post = () => {
                                 <div className="commentBox">
                                     <Flex className="commentInpFlex">
                                         <div className="addCommentInp">
-                                            <TextField name='comment' type="text" className="regInput" id="outlined-basic" label="Type Your Comment" variant="outlined" />
+                                            <TextField onChange={commentChangeHandler} name='comment' type="text" className="regInput" id="outlined-basic" label="Type Your Comment" variant="outlined" value={commentInpValue} />
                                         </div>
-                                        <Button className="newPostBtn"><BiSolidSend /></Button>
+                                        <Button onClick={()=>addCommentHandler(item)} className="newPostBtn"><BiSolidSend /></Button>
                                     </Flex>
+
+                                    {
+                                        postCommentArr.map((commentItem, commentIndex)=>{
+                                            return (
+
+                                                <div key={commentIndex} className="singleBoxComment">
+                                                    <Flex className="commentHead">
+                                                        <Flex className="commentHeadContent">
+                                                            <div className="commentPicDiv">
+                                                                <Image className="commentPic" imageUrl={commentItem.commentByImage} />
+                                                            </div>
+                                                            <div className="comentHeading">
+                                                                <Heading className="whoComment" tagName="h4" title={commentItem.commentByName}>
+                                                                    <Paragraph className="commentTime" title={`${moment(commentItem.commentDate,"YYYYMMDD h:mm:ss").fromNow()}`} />
+                                                                </Heading>
+                                                            </div>
+                                                        </Flex>
+                                                        <Flex className="commentHeadContent">
+                                                            <div className="editComment" title="Edit Comment">
+                                                                <BiSolidMessageRoundedEdit onClick={()=>forEditComment(commentItem)} />
+                                                            </div>
+                                                            <div className="deleteComment" title="Delete Comment">
+                                                                <MdDeleteForever onClick={()=>deleteComment(commentItem.key,item)} />
+                                                            </div>
+                                                        </Flex>
+                                                    </Flex>
+                                                    <div className="commentTextDiv">
+                                                        <Paragraph className="commentText" title={commentItem.commentText} />
+                                                    </div>
+                                                </div>
+
+                                                // <h1>{commentItem.commentByName}</h1>
+                                            )
+                                        })
+                                    }
                                 </div>
                         }
 
