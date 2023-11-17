@@ -797,12 +797,23 @@ const Post = () => {
                                                             </div>
                                                         </Flex>
                                                         <Flex className="commentHeadContent">
-                                                            <div className="editComment" title="Edit Comment">
-                                                                <BiSolidMessageRoundedEdit onClick={()=>forEditComment(commentItem)} />
-                                                            </div>
-                                                            <div className="deleteComment" title="Delete Comment">
-                                                                <MdDeleteForever onClick={()=>deleteComment(commentItem.key,item)} />
-                                                            </div>
+                                                            {
+                                                                commentItem.commentBy == logedinData.uid ?
+
+                                                                    <>
+                                                                        <div className="editComment" title="Edit Comment">
+                                                                            <BiSolidMessageRoundedEdit onClick={()=>forEditComment(commentItem)} />
+                                                                        </div>
+                                                                        <div className="deleteComment" title="Delete Comment">
+                                                                            <MdDeleteForever onClick={()=>deleteComment(commentItem.key,item)} />
+                                                                        </div>
+                                                                    </>
+                                                                :commentItem.postBy == logedinData.uid &&
+                                                                    <div className="deleteComment" title="Delete Comment">
+                                                                        <MdDeleteForever onClick={()=>deleteComment(commentItem.key,item)} />
+                                                                    </div>
+                                                                    
+                                                            }
                                                         </Flex>
                                                     </Flex>
                                                     <div className="commentTextDiv">
