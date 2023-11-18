@@ -19,7 +19,7 @@ import { Button, TextField } from '@mui/material'
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 
-const Post = () => {
+const MyPost = () => {
     const db = getDatabase() ;
     const storage = getStorage() ;
     const logedinData = useSelector((state) => state.logedin.value) ;
@@ -48,14 +48,16 @@ const Post = () => {
         onValue(ref(db, "post"),(snapshot)=>{
             let arr = [] ;
             snapshot.forEach((item)=>{
+                if (item.val().postBy == logedinData.uid) {
                     arr.push({...item.val(),key:item.key}) ;
+                }
             })
             setPostArr(arr.reverse())
         })
         onValue(ref(db, "postLike"),(snapshot)=>{
             let arr = [] ;
             snapshot.forEach((item)=>{
-                    arr.push({...item.val(),key:item.key}) ;
+                arr.push({...item.val(),key:item.key}) ;
             })
             setPostLikeArr(arr)
         })
@@ -642,198 +644,196 @@ const Post = () => {
         setCommentInpValue(item.commentText)
 
     }
-    
+    return (
 
-  return (
-
-    <>
-         <div>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <div className="newPostContent">
-                        <Heading tagName="h3" className="newPostHeading" title="edit your post" />
-                        <Flex className="newPostInputFlex">
-                            {/* <input onChange={changeHandler} name="newPostTextInp" className="newPostInput" type="text" placeholder="What’s on your mind?" value={inpValue} /> */}
-                            <textarea onChange={changeHandler} name="newPostTextInp" className="newPostInput" type="text" placeholder="What’s on your mind?" value={inpValue} cols="30" rows="10" />
-                            <Flex className="newPostBtnFlex">
-                                <label className="newPostPicBtnDiv">
-                                    <ImFilePicture className="newPostPicBtn" />
-                                    <input onChange={changeHandler} name="imageAndVideoInp" style={{display:"none"}} type="file" accept="image/*, video/*" />
-                                </label>
-                                <Button onClick={editPostHandler} className="newPostBtn"><BsFillSendFill /></Button>
+        <>
+             <div>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <div className="newPostContent">
+                            <Heading tagName="h3" className="newPostHeading" title="edit your post" />
+                            <Flex className="newPostInputFlex">
+                                {/* <input onChange={changeHandler} name="newPostTextInp" className="newPostInput" type="text" placeholder="What’s on your mind?" value={inpValue} /> */}
+                                <textarea onChange={changeHandler} name="newPostTextInp" className="newPostInput" type="text" placeholder="What’s on your mind?" value={inpValue} cols="30" rows="10" />
+                                <Flex className="newPostBtnFlex">
+                                    <label className="newPostPicBtnDiv">
+                                        <ImFilePicture className="newPostPicBtn" />
+                                        <input onChange={changeHandler} name="imageAndVideoInp" style={{display:"none"}} type="file" accept="image/*, video/*" />
+                                    </label>
+                                    <Button onClick={editPostHandler} className="newPostBtn"><BsFillSendFill /></Button>
+                                </Flex>
                             </Flex>
-                        </Flex>
-                        {
-                            inpImage&&
-                            <div className="newPostPrevewImageDiv">
-                                <Image className="newPostPrevewImage" imageUrl={URL.createObjectURL(inpImage)} />
-                            </div>
-                        }
-                        {
-                            inpVideo&&
-                                <div className="newPostPrevewVideoDiv">
-                                    <video width="100%" controls>
-                                        <source src={URL.createObjectURL(inpVideo)} type="video/mp4" />
-                                    </video>
-                                </div>
-                        }
-                    </div>
-                </Box>
-            </Modal>
-        </div>
-        {
-            postArr.map((item, index)=>{
-                return (
-                    
-                    <div key={index}>
-                        <div className="PostContent">
-                            <Flex className="postCtrlBtnDiv" title="add new post">
-                                {
-                                    item.postBy == logedinData.uid &&
-                                        <Flex className="postEditDelBtns">
-                                            <div>
-                                                <FaEdit onClick={()=>editPostOpenHandler(item)} title="Edit Your Post" className="postEditBtn" />
-                                            </div>
-                                            <div>
-                                                <MdDelete onClick={()=>deletePostHandler(item)} title="Delete Your Post" className="postDelBtn" />
-                                            </div>
-                                        </Flex>
-                                }
-                            </Flex>
-                            <Flex className="whoPost">
-                                <div className="postPofilePicDiv">
-                                    <Image className="postProfilePic" imageUrl={item.postByImage} />
-                                </div>
-                                <div className="postPofileNameDiv">
-                                    <Heading tagName="h4" className="postBy" title={item.postByName}>
-                                        <Paragraph className="postTime" title={`post by ${moment(item.date,"YYYYMMDD h:mm:ss").fromNow()}`} />
-                                    </Heading>
-                                </div>
-                            </Flex>
-
                             {
-                                item.text &&
-                                    <Paragraph title={item.text}/>
-                            }
-                            {
-                                item.image &&
+                                inpImage&&
                                 <div className="newPostPrevewImageDiv">
-                                    <Image className="newPostPrevewImage" imageUrl={item.image} />
+                                    <Image className="newPostPrevewImage" imageUrl={URL.createObjectURL(inpImage)} />
                                 </div>
                             }
                             {
-                                item.video &&
-                                    <div className="PostPrevewVideoDiv">
+                                inpVideo&&
+                                    <div className="newPostPrevewVideoDiv">
                                         <video width="100%" controls>
-                                            <source src={item.video} type="video/mp4" />
+                                            <source src={URL.createObjectURL(inpVideo)} type="video/mp4" />
                                         </video>
                                     </div>
                             }
-                            <div className="postFooter">
-
-                                <Flex className="postLikeCommentBtns">
-
-                                    <Flex className="unlikeBtns">
-                                        {
-                                            postLikeArr.find((el)=> el.whoLike == logedinData.uid && el.postId == item.key) ?
-                                            
-                                                <div onClick={()=>unlikeHandler(item)} className="likeBtn">
-                                                    <FcLike />
-                                                </div>
-                                            :
-                                                <div onClick={()=>likeHandler(item)} className="unlikeBtn">
-                                                    <RiDislikeFill />
-                                                </div>
-                                        }
-                                        <Paragraph className="likeNumber">{item.likeNumber ? item.likeNumber + (item.likeNumber <= 1 ? "    Like" : "   likes") : ""}</Paragraph>
-                                    </Flex>
-                                        {
-                                            postCommentsShow == item.key ?
-                                                    
-                                                <div onClick={()=>setPostCommentsShow("")} className="unlikeBtn"><BiSolidMessageX /></div>
-                                                    
-                                                
-                                            :
-                                                
-                                                <div onClick={()=>setPostCommentsShow(item.key)} className="unlikeBtn"><BiSolidMessage /></div>
-                                                
-                                        }
-                                        <Paragraph className="commentsNumber">{item.commentsNumber ? item.commentsNumber + (item.commentsNumber <= 1 ? "    comment" : "   comments") : ""}</Paragraph>
-                                </Flex>
-                            </div>
-                            
                         </div>
-
-                        {
-                            postCommentsShow == item.key &&
-
-                                <div className="commentBox">
-                                    <Flex className="commentInpFlex">
-                                        <div className="addCommentInp">
-                                            <TextField onChange={commentChangeHandler} name='comment' type="text" className="regInput" id="outlined-basic" label="Type Your Comment" variant="outlined" value={commentInpValue} />
-                                        </div>
-                                        <Button onClick={()=>addCommentHandler(item)} className="newPostBtn"><BiSolidSend /></Button>
-                                    </Flex>
-
+                    </Box>
+                </Modal>
+            </div>
+            {
+                postArr.map((item, index)=>{
+                    return (
+                        
+                        <div key={index}>
+                            <div className="PostContent">
+                                <Flex className="postCtrlBtnDiv" title="add new post">
                                     {
-                                        postCommentArr.map((commentItem, commentIndex)=>{
-                                            return (
-
-                                                <div key={commentIndex} className="singleBoxComment">
-                                                    <Flex className="commentHead">
-                                                        <Flex className="commentHeadContent">
-                                                            <div className="commentPicDiv">
-                                                                <Image className="commentPic" imageUrl={commentItem.commentByImage} />
-                                                            </div>
-                                                            <div className="comentHeading">
-                                                                <Heading className="whoComment" tagName="h4" title={commentItem.commentByName}>
-                                                                    <Paragraph className="commentTime" title={`${moment(commentItem.commentDate,"YYYYMMDD h:mm:ss").fromNow()}`} />
-                                                                </Heading>
-                                                            </div>
-                                                        </Flex>
-                                                        <Flex className="commentHeadContent">
-                                                            {
-                                                                commentItem.commentBy == logedinData.uid ?
-                                                                    <>
-                                                                        <div className="editComment" title="Edit Comment">
-                                                                            <BiSolidMessageRoundedEdit onClick={()=>forEditComment(commentItem)} />
-                                                                        </div>
+                                        item.postBy == logedinData.uid &&
+                                            <Flex className="postEditDelBtns">
+                                                <div>
+                                                    <FaEdit onClick={()=>editPostOpenHandler(item)} title="Edit Your Post" className="postEditBtn" />
+                                                </div>
+                                                <div>
+                                                    <MdDelete onClick={()=>deletePostHandler(item)} title="Delete Your Post" className="postDelBtn" />
+                                                </div>
+                                            </Flex>
+                                    }
+                                </Flex>
+                                <Flex className="whoPost">
+                                    <div className="postPofilePicDiv">
+                                        <Image className="postProfilePic" imageUrl={item.postByImage} />
+                                    </div>
+                                    <div className="postPofileNameDiv">
+                                        <Heading tagName="h4" className="postBy" title={item.postByName}>
+                                            <Paragraph className="postTime" title={`post by ${moment(item.date,"YYYYMMDD h:mm:ss").fromNow()}`} />
+                                        </Heading>
+                                    </div>
+                                </Flex>
+    
+                                {
+                                    item.text &&
+                                        <Paragraph title={item.text}/>
+                                }
+                                {
+                                    item.image &&
+                                    <div className="newPostPrevewImageDiv">
+                                        <Image className="newPostPrevewImage" imageUrl={item.image} />
+                                    </div>
+                                }
+                                {
+                                    item.video &&
+                                        <div className="PostPrevewVideoDiv">
+                                            <video width="100%" controls>
+                                                <source src={item.video} type="video/mp4" />
+                                            </video>
+                                        </div>
+                                }
+                                <div className="postFooter">
+    
+                                    <Flex className="postLikeCommentBtns">
+    
+                                        <Flex className="unlikeBtns">
+                                            {
+                                                postLikeArr.find((el)=> el.whoLike == logedinData.uid && el.postId == item.key) ?
+                                                
+                                                    <div onClick={()=>unlikeHandler(item)} className="likeBtn">
+                                                        <FcLike />
+                                                    </div>
+                                                :
+                                                    <div onClick={()=>likeHandler(item)} className="unlikeBtn">
+                                                        <RiDislikeFill />
+                                                    </div>
+                                            }
+                                            <Paragraph className="likeNumber">{item.likeNumber ? item.likeNumber + (item.likeNumber <= 1 ? "    Like" : "   likes") : ""}</Paragraph>
+                                        </Flex>
+                                            {
+                                                postCommentsShow == item.key ?
+                                                        
+                                                    <div onClick={()=>setPostCommentsShow("")} className="unlikeBtn"><BiSolidMessageX /></div>
+                                                        
+                                                    
+                                                :
+                                                    
+                                                    <div onClick={()=>setPostCommentsShow(item.key)} className="unlikeBtn"><BiSolidMessage /></div>
+                                                    
+                                            }
+                                            <Paragraph className="commentsNumber">{item.commentsNumber ? item.commentsNumber + (item.commentsNumber <= 1 ? "    comment" : "   comments") : ""}</Paragraph>
+                                    </Flex>
+                                </div>
+                                
+                            </div>
+    
+                            {
+                                postCommentsShow == item.key &&
+    
+                                    <div className="commentBox">
+                                        <Flex className="commentInpFlex">
+                                            <div className="addCommentInp">
+                                                <TextField onChange={commentChangeHandler} name='comment' type="text" className="regInput" id="outlined-basic" label="Type Your Comment" variant="outlined" value={commentInpValue} />
+                                            </div>
+                                            <Button onClick={()=>addCommentHandler(item)} className="newPostBtn"><BiSolidSend /></Button>
+                                        </Flex>
+    
+                                        {
+                                            postCommentArr.map((commentItem, commentIndex)=>{
+                                                return (
+    
+                                                    <div key={commentIndex} className="singleBoxComment">
+                                                        <Flex className="commentHead">
+                                                            <Flex className="commentHeadContent">
+                                                                <div className="commentPicDiv">
+                                                                    <Image className="commentPic" imageUrl={commentItem.commentByImage} />
+                                                                </div>
+                                                                <div className="comentHeading">
+                                                                    <Heading className="whoComment" tagName="h4" title={commentItem.commentByName}>
+                                                                        <Paragraph className="commentTime" title={`${moment(commentItem.commentDate,"YYYYMMDD h:mm:ss").fromNow()}`} />
+                                                                    </Heading>
+                                                                </div>
+                                                            </Flex>
+                                                            <Flex className="commentHeadContent">
+                                                                {
+                                                                    commentItem.commentBy == logedinData.uid ?
+                                                                        <>
+                                                                            <div className="editComment" title="Edit Comment">
+                                                                                <BiSolidMessageRoundedEdit onClick={()=>forEditComment(commentItem)} />
+                                                                            </div>
+                                                                            <div className="deleteComment" title="Delete Comment">
+                                                                                <MdDeleteForever onClick={()=>deleteComment(commentItem.key,item)} />
+                                                                            </div>
+                                                                        </>
+                                                                    :commentItem.postBy == logedinData.uid &&
                                                                         <div className="deleteComment" title="Delete Comment">
                                                                             <MdDeleteForever onClick={()=>deleteComment(commentItem.key,item)} />
                                                                         </div>
-                                                                    </>
-                                                                :commentItem.postBy == logedinData.uid &&
-                                                                    <div className="deleteComment" title="Delete Comment">
-                                                                        <MdDeleteForever onClick={()=>deleteComment(commentItem.key,item)} />
-                                                                    </div>
-                                                                    
-                                                            }
+                                                                        
+                                                                }
+                                                            </Flex>
                                                         </Flex>
-                                                    </Flex>
-                                                    <div className="commentTextDiv">
-                                                        <Paragraph className="commentText" title={commentItem.commentText} />
+                                                        <div className="commentTextDiv">
+                                                            <Paragraph className="commentText" title={commentItem.commentText} />
+                                                        </div>
                                                     </div>
-                                                </div>
-
-                                                // <h1>{commentItem.commentByName}</h1>
-                                            )
-                                        })
-                                    }
-                                </div>
-                        }
-
-                    </div>
-                )
-
-            })
-        }
-    </>
-  )
+    
+                                                    // <h1>{commentItem.commentByName}</h1>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                            }
+    
+                        </div>
+                    )
+    
+                })
+            }
+        </>
+      )
 }
 
-export default Post
+export default MyPost

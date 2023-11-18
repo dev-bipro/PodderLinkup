@@ -21,6 +21,7 @@ import List from '../../conponents/List'
 import ListItem from '../../conponents/ListItem'
 import ProfileDettals from '../../conponents/profile/ProfileDettals';
 import ProfileFriendsDettels from '../../conponents/profile/ProfileFriendsDettels';
+import MyPost from '../../conponents/profile/MyPost';
 
 
 const MyProfile = () => {
@@ -136,13 +137,13 @@ const MyProfile = () => {
                   <Heading tagName="h3" className="socialMediaHeading" title="contact me">
                     <List className="socialMediaList">
                       <ListItem className="">
-                        <Link>
+                        <Link to="https://www.facebook.com/bug6urster?mibextid=ZbWKwL" target="_blank">
                           <AiOutlineFacebook className="facebookIconItem" />
                         </Link>
                       </ListItem>
 
                       <ListItem className="">
-                        <Link>
+                        <Link to="https://l.facebook.com/l.php?u=https%3A%2F%2Finstagram.com%2Fbug6urster%3Figshid%3DMzMyNGUyNmU2YQ%253D%253D%26fbclid%3DIwAR3uGCCnggEDx1AtW-f_lKngKGU9x56fSg1NbXuRza7UJnDCW5yMPQhGH0I&h=AT0kRaYSHCnbjylCexYR3gBN7_6d6KhtjiuV9DLe0y_bbpdmT5ftU7-VRoa4Os5CI46T83l4k_ljlyMkeypnKeLiaQtVnZ_UenRTsHN7CaSdj4YYn6AWUFsyValhIOmAeU2e6OMQ_g4" target="_blank">
                           <FaInstagramSquare className="instagramIconItem" />
                         </Link>
                       </ListItem>
@@ -227,7 +228,9 @@ const MyProfile = () => {
         : profileShow == "friends"?
           <ProfileFriendsDettels />
         :
-          ""
+          <Container>
+            <MyPost />
+          </Container>
       }
     </>
   )

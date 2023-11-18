@@ -64,16 +64,11 @@ const Registration = () => {
             setPasswordError("please type your password !")
         }
         if (formData.fullName && formData.email && formData.password) {
-
-            const fullNameArr = formData.fullName.split("") ;
             const validEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ ;
 
-            if (formData.fullName.length < 3 || fullNameArr.find(el => !isNaN(el-1))) {
+            if (formData.fullName.length < 3) {
                 if (formData.fullName.length <3) {
                     setFullNameError("enter name min 3 letter's") ;
-                }
-                if (fullNameArr.find(el => !isNaN(el-1))) {
-                    setFullNameError("invalid name") ;
                 }
             }
             if (!validEmail.test(formData.email)) {
@@ -82,7 +77,7 @@ const Registration = () => {
             if (formData.password.length < 6) {
                 setPasswordError("type password min 6 letter's")
             }
-            if (formData.fullName.length > 2 && fullNameArr.find(el => isNaN(el-1)) && validEmail.test(formData.email) && formData.password.length > 5) {
+            if (formData.fullName.length > 2 && validEmail.test(formData.email) && formData.password.length > 5) {
                 setLoad(false) ;
                 setTimeout(()=>{
                     setLoad(true)

@@ -151,7 +151,7 @@ const Login = () => {
                         />
                     </Button>
                 :
-                    <Button onClick={clickHandler} className="regBtn" variant="contained">sign up</Button>
+                    <Button onClick={clickHandler} className="regBtn" variant="contained">sign in</Button>
             }
             <Paragraph className="navigatePage">You Have No Account ? <Link to="/registration">Sign Up</Link></Paragraph>
         </div>

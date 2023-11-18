@@ -90,3 +90,14 @@
     color: var(--main-text-color);
     position: relative;
 }
+
+.logoutBtn {
+    text-align: center;
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    margin-left: 20px;
+    color: rgb(61, 10, 10);
+}

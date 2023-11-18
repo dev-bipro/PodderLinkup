@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import whoLogedin from '../features/logdin/whoLogedin'
-import postLikeCount from '../features/postLike/postLikeCount'
+import activeChat from '../features/activeChat/activeChat'
 
 export default configureStore({
   reducer: {
         logedin : whoLogedin,
-        postLike: postLikeCount,
+        whoActiveChat: activeChat,
         // logedinT : 2,
     },
 })

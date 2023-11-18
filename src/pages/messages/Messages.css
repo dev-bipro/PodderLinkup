@@ -1,0 +1,222 @@
+#chatList {
+    width: 100%;
+    height: 100vh;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0px 6px 19px -3px rgba(0,0,0,0.1);
+}
+.chatListBox {
+    padding: 20px 0;
+    overflow-y: scroll;
+}
+.chatListBoxHeading {
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    font-weight: 700;
+    font-size: 25px;
+    color: var(--secondery-text-color);
+    padding: 20px 8px;
+    border-bottom: 2px solid var(--main-color);
+    margin-bottom: 10px;
+}
+
+.chatlistUser{
+    margin-top: 20px;
+    width: 100%;
+    padding: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 16px 11px -3px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+#messagesBox {
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0px 6px 19px -3px rgba(0,0,0,0.1);
+}
+
+.messagesBoxHedder {
+    display: flex;
+    justify-content: space-between ;
+    align-items: center;
+    padding-bottom: 20px;
+    /* border-bottom: 2px solid var(--main-color); */
+}
+
+.messageBoxImageName {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.messageBoxImageDiv {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.messageBoxImage {
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-size: cover;
+}
+
+.activeChatName {
+    font-family: var(--barlow);
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--main-text-color);
+    margin-bottom: 10px;
+}
+.onlineOfline {
+    font-family: var(--nunito);
+    font-weight: 300;
+    letter-spacing: 1px;
+    font-size: 20px;
+    color: green;
+}
+
+.messagesBoxIconDiv {
+    display: flex;
+    gap: 30px;
+}
+
+.messageBox {
+    width: 100%;
+    height: 80%;
+    /* background-color: red; */
+    box-shadow: inset 0px 0px 25px 2px rgba(0,0,0,0.1);
+    overflow-y: scroll;
+}
+
+
+
+.sendSmsInputFlex {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.newSendSmsInput{
+    width: 90%;
+    max-height: 80px;
+    padding: 4px;
+    font-family: var(--barlow);
+    font-size: 18px;
+    border: none;
+    outline: none;
+}
+.newSendSmsInput::placeholder{
+    font-family: var(--barlow);
+    font-size: 18px;
+}
+.newSendSmsInput:focus{
+    font-family: var(--barlow);
+    font-size: 18px;
+    border: none;
+}
+
+
+.receiveTextSmsDiv {
+    margin: 15px;
+}
+
+.receiveTextSms {
+    display: inline-block;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: rgb(231, 231, 231);
+    font-family: var(--nunito);
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--main-text-color);
+}
+.sendTextSmsDiv {
+    /* display: inline-block; */
+    margin: 15px;
+    text-align: end;
+    /* margin-left: auto; */
+}
+
+.sendTextSms {
+    display: inline-block;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: var(--main-color);
+    font-family: var(--nunito);
+    font-weight: 600;
+    font-size: 18px;
+    color: #fff;
+}
+.smsTime {
+    margin-top: 8px;
+    text-transform: lowercase;
+    font-family: var(--nunito);
+    font-weight: 300;
+    font-size: 13px;
+    color: var(--main-text-color);
+}
+.sendImageSmsDiv {
+    text-align: end;
+    margin: 15px;
+}
+.sendImageSms {
+    margin-left: auto;
+    width: 300px;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: var(--main-color) !important;
+    /* height: 00px; */
+    overflow: hidden;
+}
+.imageSms {
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-size: cover;
+}
+.receiveImageSmsDiv {
+    margin: 15px;
+}
+
+
+.receiveImageSms {
+    width: 300px;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: rgb(231, 231, 231);
+    /* height: 00px; */
+    overflow: hidden;
+}
+
+
+.receiveVideoSmsDiv {
+    margin: 15px;
+}
+.receiveVideoSms {
+    /* margin-left: auto; */
+    width: 500px;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: rgb(231, 231, 231) !important;
+    /* height: 00px; */
+    overflow: hidden;
+}
+.sendVideoSmsDiv {
+    text-align: end;
+    margin: 15px;
+}
+.sendVideoSms {
+    margin-left: auto;
+    width: 500px;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: var(--main-color) !important;
+    overflow: hidden;
+}

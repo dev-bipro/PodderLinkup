@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/home/Home';
 import MyProfile from './pages/profile/MyProfile';
 import RootLayout from './conponents/layout/RootLayout';
+import Messages from './pages/messages/Messages';
 
 function App() {
   const router = createBrowserRouter(
@@ -24,6 +25,7 @@ function App() {
 
           <Route path="/home" element={<Home/>} />
           <Route path="/me" element={<MyProfile/>} />
+          <Route path="/messages" element={<Messages/>} />
 
         </Route> 
 
