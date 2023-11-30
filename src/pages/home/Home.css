@@ -21,6 +21,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+}
+.voiceS{
+    position: absolute;
+    top: 30px;
+    right: 170px;
+    font-size: 20px;
+    cursor: pointer;
 }
 .newPostInput{
     width: 90%;
