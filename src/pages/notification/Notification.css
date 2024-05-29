@@ -1,0 +1,59 @@
+.notiHeading{
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    font-weight: 700;
+    font-size: 25px;
+    color: var(--secondery-text-color);
+    padding: 20px 8px;
+    border-bottom: 2px solid var(--main-color);
+    margin-bottom: 10px;
+}
+
+.notiMainFlex{
+    display: flex;
+    justify-content: space-between;
+}
+.notifications {
+    width: 30%;
+}
+
+.notificationBox {
+    margin-top: 20px;
+    width: 100%;
+    padding: 4px;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    box-shadow: 0px 16px 11px -3px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+.notificationByImage {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.notiImage {
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-size: cover;
+}
+
+.notiName {
+    font-family: var(--barlow);
+    margin-bottom: 10px;
+}
+.notiSms {
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    margin-bottom: 10px;
+}
+
+.notiContentPrevDiv {
+    width: 65%;
+}
+
+.prevNotiPostBox {
+    width: 100%;
+}
