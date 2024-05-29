@@ -15,6 +15,7 @@ import { uploadBytes, ref as storRef, getStorage, getDownloadURL, } from 'fireba
 import moment from 'moment/moment';
 import EmojiPicker from 'emoji-picker-react'
 import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder';
+// import activeChat from '../../features/activeChat/activeChat'
 
 const MessagesBox = () => {
     const db = getDatabase();
@@ -32,12 +33,25 @@ const MessagesBox = () => {
 
 
 
+    // const db = getDatabase();
+    const connectedRef = ref(db, ".info/connected");
     useEffect(() => {
+        
+
         onValue(ref(db, "messages"), (snapshot) => {
             const arr = [];
             snapshot.forEach((item) => {
-                if ((item.val().receiveId == logedinData.uid && item.val().senderId == chatNow.friendId) || (item.val().senderId == logedinData.uid && item.val().receiveId == chatNow.friendId)) {
-                    arr.push({ ...item.val(), key: item.key })
+                if (chatNow.type == "single") {
+
+                    if ((item.val().receiveId == logedinData.uid && item.val().senderId == chatNow.friendId) || (item.val().senderId == logedinData.uid && item.val().receiveId == chatNow.friendId)) {
+                        arr.push({ ...item.val(), key: item.key })
+                    }
+                }
+                else {
+        
+                    if (item.val().receiveId == chatNow.id) {
+                        arr.push({ ...item.val(), key: item.key })
+                    }
                 }
             })
             setMessagesArr(arr)
@@ -48,14 +62,33 @@ const MessagesBox = () => {
         onValue(ref(db, "messages"), (snapshot) => {
             const arr = [];
             snapshot.forEach((item) => {
-                if ((item.val().receiveId == logedinData.uid && item.val().senderId == chatNow.friendId) || (item.val().senderId == logedinData.uid && item.val().receiveId == chatNow.friendId)) {
-                    arr.push({ ...item.val(), key: item.key })
+                if (chatNow.type == "single") {
+
+                    if ((item.val().receiveId == logedinData.uid && item.val().senderId == chatNow.friendId) || (item.val().senderId == logedinData.uid && item.val().receiveId == chatNow.friendId)) {
+                        arr.push({ ...item.val(), key: item.key })
+                    }
                 }
+                else {
+        
+                    if (item.val().receiveId == chatNow.id) {
+                        arr.push({ ...item.val(), key: item.key })
+                    }
+                }
+
             })
             setMessagesArr(arr)
         })
+
+        // onValue(connectedRef, (snap) => {
+        //     console.log(snap.val());
+        //     // if (snap.val() === true) {
+        //     //     console.log("connected");
+        //     // } else {
+        //     //     console.log("not connected");
+        //     // }
+        // });
         // console.log(messagesArr);
-    }, chatNow?.friendId)
+    }, [chatNow?.friendId || chatNow?.id])
 
 
     const changeHandler = (e) => {
@@ -67,12 +100,20 @@ const MessagesBox = () => {
                 uploadBytes(imageStorageRef, e.target.files[0]).then((snapshot) => {
                     getDownloadURL(storRef(storage, snapshot.metadata.fullPath)).then((imageUrl) => {
 
-                        set(push(ref(db, "messages")), {
-                            receiveId: chatNow.friendId,
-                            senderId: logedinData.uid,
-                            imageMessage: imageUrl,
-                            date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                        })
+                        chatNow.type == "single" ?
+                            set(push(ref(db, "messages")), {
+                                receiveId: chatNow.friendId,
+                                senderId: logedinData.uid,
+                                imageMessage: imageUrl,
+                                date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                            })
+                        :
+                            set(push(ref(db, "messages")), {
+                                receiveId: chatNow.id,
+                                senderId: logedinData.uid,
+                                imageMessage: imageUrl,
+                                date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                            })
                     })
                 })
                 // getDownloadURL(storRef(storage, videoSnapshot.metadata.fullPath)).then((videoUrl) => {
@@ -84,12 +125,20 @@ const MessagesBox = () => {
                 uploadBytes(videoStorageRef, e.target.files[0]).then((snapshot) => {
                     getDownloadURL(storRef(storage, snapshot.metadata.fullPath)).then((videoUrl) => {
 
-                        set(push(ref(db, "messages")), {
-                            receiveId: chatNow.friendId,
-                            senderId: logedinData.uid,
-                            videoMessage: videoUrl,
-                            date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                        })
+                        chatNow.type == "single" ?
+                            set(push(ref(db, "messages")), {
+                                receiveId: chatNow.friendId,
+                                senderId: logedinData.uid,
+                                videoMessage: videoUrl,
+                                date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                            })
+                        :
+                            set(push(ref(db, "messages")), {
+                                receiveId: chatNow.id,
+                                senderId: logedinData.uid,
+                                videoMessage: videoUrl,
+                                date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                            })
                     })
                 })
                 // getDownloadURL(storRef(storage, videoSnapshot.metadata.fullPath)).then((videoUrl) => {
@@ -99,14 +148,28 @@ const MessagesBox = () => {
         }
     }
     const clickHandler = () => {
-        set(push(ref(db, "messages")), {
-            receiveId: chatNow.friendId,
-            senderId: logedinData.uid,
-            textMessage: messagesValue,
-            date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-        }).then(() => {
-            setMessagesValue("");
-        })
+        if (chatNow.type == "single") {
+
+            set(push(ref(db, "messages")), {
+                receiveId: chatNow.friendId,
+                senderId: logedinData.uid,
+                textMessage: messagesValue,
+                date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+            }).then(() => {
+                setMessagesValue("");
+            })
+        }
+        else {
+
+            set(push(ref(db, "messages")), {
+                receiveId: chatNow.id,
+                senderId: logedinData.uid,
+                textMessage: messagesValue,
+                date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+            }).then(() => {
+                setMessagesValue("");
+            })
+        }
     }
     const emojiClick = (e) => {
         // console.log(smsInputRef.current.selectionStart);
@@ -118,7 +181,7 @@ const MessagesBox = () => {
 
         setMessagesValue(sms)
     }
-    const recorderControls = useAudioRecorder()
+    // const recorderControls = useAudioRecorder()
     const addAudioElement = (blob) => {
         // const url = URL.createObjectURL(blob);
         // const audio = document.createElement("audio");
@@ -134,15 +197,26 @@ const MessagesBox = () => {
                 uploadBytes(audioStorageRef, auidoMessagesValue).then((snapshot) => {
                     getDownloadURL(storRef(storage, snapshot.metadata.fullPath)).then((audioUrl) => {
 
-                        set(push(ref(db, "messages")), {
-                            receiveId: chatNow.friendId,
-                            senderId: logedinData.uid,
-                            audioMessage: audioUrl,
-                            date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                        }).then(()=>{
+                        chatNow.type == "single" ?
+                            set(push(ref(db, "messages")), {
+                                receiveId: chatNow.friendId,
+                                senderId: logedinData.uid,
+                                audioMessage: audioUrl,
+                                date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                            }).then(()=>{
 
-                            setAudioMessagesValue(null)
-                        })
+                                setAudioMessagesValue(null)
+                            })
+                        :
+                            set(push(ref(db, "messages")), {
+                                receiveId: chatNow.id,
+                                senderId: logedinData.uid,
+                                audioMessage: audioUrl,
+                                date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+                            }).then(()=>{
+
+                                setAudioMessagesValue(null)
+                            })
                     })
                 })
     }
@@ -152,10 +226,10 @@ const MessagesBox = () => {
             <Flex className="messagesBoxHedder">
                 <Flex className="messageBoxImageName">
                     <div className="messageBoxImageDiv">
-                        <Image className="messageBoxImage" imageUrl={chatNow?.friendImage} />
+                        <Image className="messageBoxImage" imageUrl={chatNow?.type == "single" ? chatNow?.friendImage : chatNow?.groupImage} />
                     </div>
                     <div className="activeChatNameDiv">
-                        <Heading tagName="h3" className="activeChatName" title={chatNow?.friendName}>
+                        <Heading tagName="h3" className="activeChatName" title={chatNow?.type == "single" ? chatNow?.friendName : chatNow?.groupName}>
                             <Paragraph className="onlineOfline" title="active" />
                         </Heading>
                     </div>
@@ -172,35 +246,67 @@ const MessagesBox = () => {
             </Flex>
             <div className="messageBox">
                 {
-                    messagesArr.map((messageItem, messageIndex) => {
-                        if (messageItem.senderId == logedinData.uid) {
-                            return (
-                                // {
-                                messageItem.textMessage ?
-                                    <div className="sendTextSmsDiv">
-                                        <Paragraph className="sendTextSms" title={messageItem.textMessage} />
-                                        <Paragraph className="smsTime" title={`${moment(messageItem.date, "YYYYMMDD h:mm:ss").fromNow()}`} />
-                                    </div>
-                                    // <h1>{messageItem.textMessage}</h1>
-                                    : messageItem.imageMessage ?
-                                        <div className="sendImageSmsDiv">
-                                            <div className="sendImageSms">
-                                                <Image className="imageSms" imageUrl={messageItem.imageMessage} />
-                                            </div>
+                    // chatNow.type == "single" ?
+
+                        messagesArr.map((messageItem, messageIndex) => {
+                            // if (chatNow.type == "single") {
+                                
+                            if (messageItem.senderId == logedinData.uid) {
+                                return (
+                                    // {
+                                    messageItem.textMessage ?
+                                        <div className="sendTextSmsDiv">
+                                            <Paragraph className="sendTextSms" title={messageItem.textMessage} />
                                             <Paragraph className="smsTime" title={`${moment(messageItem.date, "YYYYMMDD h:mm:ss").fromNow()}`} />
                                         </div>
-                                        : messageItem.videoMessage ?
-                                            <div className="sendVideoSmsDiv">
-                                                <div className="sendVideoSms">
-                                                    <video width="100%" controls>
-                                                        <source src={messageItem.videoMessage} type="video/mp4" />
-                                                    </video>
+                                        // <h1>{messageItem.textMessage}</h1>
+                                        : messageItem.imageMessage ?
+                                            <div className="sendImageSmsDiv">
+                                                <div className="sendImageSms">
+                                                    <Image className="imageSms" imageUrl={messageItem.imageMessage} />
+                                                </div>
+                                                <Paragraph className="smsTime" title={`${moment(messageItem.date, "YYYYMMDD h:mm:ss").fromNow()}`} />
+                                            </div>
+                                            : messageItem.videoMessage ?
+                                                <div className="sendVideoSmsDiv">
+                                                    <div className="sendVideoSms">
+                                                        <video width="100%" controls>
+                                                            <source src={messageItem.videoMessage} type="video/mp4" />
+                                                        </video>
+                                                    </div>
+                                                    <Paragraph className="smsTime" title={`${moment(messageItem.date, "YYYYMMDD h:mm:ss").fromNow()}`} />
+                                                </div>
+                                                : messageItem.audioMessage ?
+                                                <div className="sendTextSmsDiv">
+                                                    <div className="sendTextSms">
+                                                        <audio width="100%" controls>
+                                                            <source src={messageItem.audioMessage} type="audio/ogg" />
+                                                        </audio>
+                                                    </div>
+                                                    <Paragraph className="smsTime" title={`${moment(messageItem.date, "YYYYMMDD h:mm:ss").fromNow()}`} />
+                                                </div>
+                                                : ""
+                                    // }
+                                )
+                            }
+                            else {
+                                return (
+                                    messageItem.textMessage ?
+                                        <div className="receiveTextSmsDiv">
+                                            <Paragraph className="receiveTextSms" title={messageItem.textMessage} />
+                                            <Paragraph className="smsTime" title={`${moment(messageItem.date, "YYYYMMDD h:mm:ss").fromNow()}`} />
+                                        </div>
+                                        // <h1>{messageItem.textMessage}</h1>
+                                        : messageItem.imageMessage ?
+                                            <div className="receiveImageSmsDiv">
+                                                <div className="receiveImageSms">
+                                                    <Image className="imageSms" imageUrl={messageItem.imageMessage} />
                                                 </div>
                                                 <Paragraph className="smsTime" title={`${moment(messageItem.date, "YYYYMMDD h:mm:ss").fromNow()}`} />
                                             </div>
                                             : messageItem.audioMessage ?
-                                            <div className="sendTextSmsDiv">
-                                                <div className="sendTextSms">
+                                            <div className="receiveTextSmsDiv">
+                                                <div className="receiveTextSms">
                                                     <audio width="100%" controls>
                                                         <source src={messageItem.audioMessage} type="audio/ogg" />
                                                     </audio>
@@ -208,37 +314,10 @@ const MessagesBox = () => {
                                                 <Paragraph className="smsTime" title={`${moment(messageItem.date, "YYYYMMDD h:mm:ss").fromNow()}`} />
                                             </div>
                                             : ""
-                                // }
-                            )
-                        }
-                        else {
-                            return (
-                                messageItem.textMessage ?
-                                    <div className="receiveTextSmsDiv">
-                                        <Paragraph className="receiveTextSms" title={messageItem.textMessage} />
-                                        <Paragraph className="smsTime" title={`${moment(messageItem.date, "YYYYMMDD h:mm:ss").fromNow()}`} />
-                                    </div>
-                                    // <h1>{messageItem.textMessage}</h1>
-                                    : messageItem.imageMessage ?
-                                        <div className="receiveImageSmsDiv">
-                                            <div className="receiveImageSms">
-                                                <Image className="imageSms" imageUrl={messageItem.imageMessage} />
-                                            </div>
-                                            <Paragraph className="smsTime" title={`${moment(messageItem.date, "YYYYMMDD h:mm:ss").fromNow()}`} />
-                                        </div>
-                                        : messageItem.audioMessage ?
-                                        <div className="receiveTextSmsDiv">
-                                            <div className="receiveTextSms">
-                                                <audio width="100%" controls>
-                                                    <source src={messageItem.audioMessage} type="audio/ogg" />
-                                                </audio>
-                                            </div>
-                                            <Paragraph className="smsTime" title={`${moment(messageItem.date, "YYYYMMDD h:mm:ss").fromNow()}`} />
-                                        </div>
-                                        : ""
-                            )
-                        }
-                    })
+                                )
+                            }
+                            // }
+                        })
                 }
             </div>
             <Flex className="sendSmsInputFlex">

@@ -22,6 +22,9 @@ import ListItem from '../../conponents/ListItem'
 import ProfileDettals from '../../conponents/profile/ProfileDettals';
 import ProfileFriendsDettels from '../../conponents/profile/ProfileFriendsDettels';
 import MyPost from '../../conponents/profile/MyPost';
+import { GrView } from "react-icons/gr";
+import UpdateProfilePic from '../../conponents/profile/UpdateProfilePic';
+import UpdateCoverPic from '../../conponents/profile/UpdateCoverPic';
 
 
 const MyProfile = () => {
@@ -31,6 +34,7 @@ const MyProfile = () => {
   const logedinData = useSelector(state => state.logedin.value) ;
   const dispatch = useDispatch() ;
   const [myData, setMyData] = useState({}) ;
+  const [profilePicEditModal, setProfilePicEditModal] = useState(false) ;
   
   // updateName start
   const [nameForUpdate, setNameForUpdate] = useState("")
@@ -77,13 +81,16 @@ const MyProfile = () => {
     boxShadow: 24,
     p: 4,
   };
+  const [coverPicModal, setCoverPicModal] = useState(false);
   const [editNameOpen, setEditNameOpen] = useState(false);
   const [contactInfoModalOpen, setContactInfoModalOpen] = useState(false);
   const editNameModalOpenHandler = () => setEditNameOpen(true);
   const contactInfoModalOpenHandler = () => setContactInfoModalOpen(true);
   const handleClose = () => {
+    setCoverPicModal(false);
     setEditNameOpen(false);
     setContactInfoModalOpen(false);
+    setProfilePicEditModal(false);
   }
   // modal part end
   
@@ -116,7 +123,7 @@ const MyProfile = () => {
       <section id="profileTop">
         <div>
           <Modal
-            open={editNameOpen || contactInfoModalOpen}
+            open={editNameOpen || contactInfoModalOpen || coverPicModal || profilePicEditModal}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
@@ -133,7 +140,7 @@ const MyProfile = () => {
                       <Button onClick={updateNameHandler} className="regBtn" variant="contained">update</Button>
                     </>
                   </Heading>
-                :
+                : contactInfoModalOpen ?
                   <Heading tagName="h3" className="socialMediaHeading" title="contact me">
                     <List className="socialMediaList">
                       <ListItem className="">
@@ -161,6 +168,10 @@ const MyProfile = () => {
                       </ListItem>
                     </List>
                   </Heading>
+                : coverPicModal ?
+                  <UpdateCoverPic />
+                :
+                  <UpdateProfilePic />
               }
             </Box>
           </Modal>
@@ -168,14 +179,24 @@ const MyProfile = () => {
         <Container>
           <div className="coverPicDiv">
             <Image className="coverPic" imageUrl={myData?.coverPhotoURL} />
-            <div className="editCoverImage">
+            <Flex onClick={()=> setCoverPicModal(true)} className="editCoverImage">
               <FaRegEdit />
               <Paragraph className="" title="edit cover photo" />
-            </div>
+            </Flex>
           </div>
           <div className="profileDittals">
             <Flex className="profiledittalsFlex">
               <div className="profilePhotoDiv">
+                <div className="profileEditAndView">
+                  <Flex className="profilePicControler">
+                    <GrView />
+                    <Paragraph title="view picture" />
+                  </Flex>
+                  <Flex onClick={() => setProfilePicEditModal(true)} className="profilePicControler">
+                    <FaRegEdit />
+                    <Paragraph title="change picture" />
+                  </Flex>
+                </div>
                 <Image className="profilePhoto" imageUrl={logedinData.photoURL} />
               </div>
               <div className="nameAndBio">

@@ -23,7 +23,6 @@ const Post = () => {
     const db = getDatabase() ;
     const storage = getStorage() ;
     const logedinData = useSelector((state) => state.logedin.value) ;
-    const postLike = useSelector((state) => state.logedin.value) ;
 
 
     const [inpValue, setInpValue] = useState("") ;

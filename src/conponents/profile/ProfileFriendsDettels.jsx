@@ -1,11 +1,12 @@
-import React from 'react'
+// import React from 'react'
 import Grid from '@mui/material/Grid';
-import { styled } from '@mui/material/styles';
 import Container from '../Container';
 import User from '../User';
 import FriendRequest from '../FriendRequest';
 import Friends from '../Friends';
 import BlockFriends from '../BlockFriends';
+import GroupList from '../GroupList';
+import MyGroup from '../MyGroup';
 
 const ProfileFriendsDettels = () => {
     // const Item = styled(Paper)(({ theme }) => ({
@@ -29,6 +30,12 @@ const ProfileFriendsDettels = () => {
                 </Grid>
                 <Grid item xs={6}>
                     <Friends />
+                </Grid>
+                <Grid item xs={6}>
+                    <GroupList />
+                </Grid>
+                <Grid item xs={6}>
+                    <MyGroup />
                 </Grid>
                 <Grid item xs={6}>
                     <BlockFriends />

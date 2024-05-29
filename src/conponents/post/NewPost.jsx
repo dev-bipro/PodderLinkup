@@ -40,11 +40,12 @@ const NewPost = () => {
     const clickHandler = () => {
 
         const idForPost = `postid${Date.now()}`;
-        console.log(idForPost);
+        const nowDate = Date.now() ;
+        const postTime = `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}` ;
 
         if (inpValue && inpImage && inpVideo) {
-            const videoStorageRef = storRef(storage, inpVideo?.name + Date.now());
-            const imageStorageRef = storRef(storage, inpImage?.name + Date.now());
+            const videoStorageRef = storRef(storage, inpVideo?.name + nowDate);
+            const imageStorageRef = storRef(storage, inpImage?.name + nowDate);
 
             uploadBytes(videoStorageRef, inpVideo).then((videoSnapshot) => {
                 getDownloadURL(storRef(storage, videoSnapshot.metadata.fullPath)).then((videoUrl) => {
@@ -60,11 +61,19 @@ const NewPost = () => {
                                 imageId: imageSnapshot.metadata.fullPath,
                                 image: imageUrl,
                                 text: inpValue,
-                                date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                            }).then(() => {
-                                setInpValue("");
-                                setInpImage(null);
-                                setInpVideo(null);
+                                date: postTime
+                            }).then(()=>{
+                                set(ref(db, "newNotification/" + idForPost), {
+                                    postBy: logedinData.uid,
+                                    postByName: logedinData.displayName,
+                                    postByImage: logedinData.photoURL,
+                                    notiSms : "add new post" ,
+                                    date: postTime
+                                }).then(() => {
+                                    setInpValue("");
+                                    setInpImage(null);
+                                    setInpVideo(null);
+                                })
                             })
                         })
                     });
@@ -182,9 +191,17 @@ const NewPost = () => {
                         postByName: logedinData.displayName,
                         postByImage: logedinData.photoURL,
                         text: inpValue,
-                        date: `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-                    }).then(() => {
-                        setInpValue("");
+                        date: postTime
+                    }).then(()=>{
+                        set(ref(db, "newNotification/" + idForPost), {
+                            postBy: logedinData.uid,
+                            postByName: logedinData.displayName,
+                            postByImage: logedinData.photoURL,
+                            notiSms : "add new post" ,
+                            date: postTime
+                        }).then(() => {
+                            setInpValue("");
+                        })
                     })
                 }
             }

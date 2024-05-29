@@ -17,6 +17,7 @@
     right: 50px;
     /* width: 100%; */
 }
+
 .editCoverImage{
     display: flex;
     align-items: center;
@@ -26,6 +27,13 @@
     background-color: #fff;
     cursor: pointer;
 }
+
+.coverPrev{
+    width: 200px;
+    height: 100px;
+    border-radius: 0;
+}
+
 .profileDittals{
     background: #FFF;
 }
@@ -46,8 +54,55 @@
     left: 25px;
     transform: translateY(-35px);
 }
+
+.profileEditAndView{
+    width: 100%;
+    height: 100px;
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    bottom: 100%;
+    text-align: center;
+    padding-top: 10px;
+    z-index: 999;
+    transition: all linear .3s;
+}
+.profilePhotoDiv:hover .profileEditAndView{
+    bottom: 0;
+}
+.profilePicControler {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    text-transform: capitalize;
+    font-family: var(--barlow);
+    font-weight: 600;
+    /* align-items: center; */
+}
+/* .profilePicControler {
+    
+    align-items: center;
+} */
+
 .profilePhoto{
     width: 100%;
+}
+
+.box {
+    display: inline-block;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.img-preview {
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    border: 10px solid #fff;
+    border-radius: 50%;
+    overflow: hidden;
+    
 }
 .nameAndBio{
     width: 80%;
@@ -490,3 +545,6 @@
 .addFriendBtn:hover{
     background: var(--main-hover-gradiant-color);
 }
+
+
+  

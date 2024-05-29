@@ -41,6 +41,9 @@ const Nav = () => {
                     <ListItem className={location.pathname == "/messages"? "active":"navItem"}>
                         <Link to="/messages">messages</Link>
                     </ListItem>
+                    <ListItem className={location.pathname == "/notification"? "active":"navItem"}>
+                        <Link to="/notification">notification</Link>
+                    </ListItem>
                 </List>
                 <Flex className="navProfile">
                     <div className="navProfileImageDiv">
