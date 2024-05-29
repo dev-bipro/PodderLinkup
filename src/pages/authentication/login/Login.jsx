@@ -130,6 +130,7 @@ const Login = () => {
           id="outlined-basic"
           label="Email Addres"
           variant="outlined"
+          value={formData.email}
         />
         {passwordError && <Alert severity="error">{passwordError}</Alert>}
         <div className="passwordInput">
@@ -141,6 +142,7 @@ const Login = () => {
             id="outlined-basic"
             label="Password"
             variant="outlined"
+            value={formData.password}
           />
           <div className="passwordEyes">
             {passwordShow ? (
