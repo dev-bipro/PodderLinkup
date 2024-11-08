@@ -1,33 +1,39 @@
-*{
+/* Nav.css */
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
-a{
+a {
   text-decoration: none;
 }
-ol,ul {
+ol,
+ul {
   list-style: none;
 }
-h1,h2,h3,h4,h5,h6,p{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   line-height: 0.8;
 }
 
 /* Root Css Part Start */
 :root {
-  --main-color: #008296;
-  --main-gradiant-color: linear-gradient(180deg, #008296 0%, rgb(16, 110, 157) 100%);
-  --main-hover-gradiant-color: linear-gradient(180deg, rgb(16, 110, 157) 0%, #008296 100%);
-  --main-text-color: #181818;
-  --secondery-text-color: #004745;
-  --rear-text-color: rgba(24, 24, 24, 0.20);
-  --nunito: 'Nunito', sans-serif;
-  --barlow: 'Barlow', sans-serif;
+  --primary-color: #1e1e1e;
+  --secondary-color: #282828;
+  --accent-color: #00adb5;
+  --text-color: #ffffff;
+  --error-color: #ff3e3e;
 }
-body{
-  background: #F7F9FB;
+
+body {
+  background: #f7f9fb;
 }
-.container{
+.container {
   width: 1360px;
   margin: 0 auto;
 }

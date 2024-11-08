@@ -1,11 +1,27 @@
-import React from 'react'
+import React from "react";
+import PropTypes from "prop-types";
 
-const Image = ({className, imageUrl, alt}) => {
+const Image = ({ className, imageUrl, alt }) => {
   return (
     <picture>
-        <img className={className} src={imageUrl} alt={alt} />
+      <img
+        className={className}
+        src={imageUrl}
+        alt={alt}
+        loading="lazy" // Optional for performance improvement
+      />
     </picture>
-  )
-}
+  );
+};
 
-export default Image
+Image.propTypes = {
+  className: PropTypes.string,
+  imageUrl: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+};
+
+Image.defaultProps = {
+  className: "",
+};
+
+export default Image;

@@ -1,9 +1,17 @@
-import React from 'react'
+import React from "react";
+import PropTypes from "prop-types";
 
-const List = ({className, children}) => {
-  return (
-    <ul className={className}>{children}</ul>
-  )
-}
+const List = ({ className, children }) => {
+  return <ul className={className}>{children}</ul>;
+};
 
-export default List
+List.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.node.isRequired,
+};
+
+List.defaultProps = {
+  className: "",
+};
+
+export default List;

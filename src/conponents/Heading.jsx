@@ -1,14 +1,27 @@
-import React from 'react'
+import React from "react";
+import PropTypes from "prop-types";
 
-const Heading = (props) => {
+const Heading = ({ tagName, className, title, children }) => {
+  const Tag = tagName; // Dynamic component rendering
+
   return (
-      <>
-        <props.tagName className={props.className}>{props.title}</props.tagName>
-        {
-            props.children
-        }
+    <>
+      <Tag className={className}>{title}</Tag>
+      {children}
     </>
-  )
-}
+  );
+};
 
-export default Heading
+Heading.propTypes = {
+  tagName: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node,
+};
+
+Heading.defaultProps = {
+  className: "",
+  children: null,
+};
+
+export default Heading;
